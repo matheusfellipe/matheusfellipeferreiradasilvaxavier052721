@@ -8,7 +8,7 @@ import { ProtectedRoute } from './ProtectedRoute';
 
 export const routes: RouteObject[] = [
   {
-    path: 'authentication/login',
+    path: 'login',
     element: <LoginPage />,
   },
   {
@@ -24,6 +24,6 @@ export const routes: RouteObject[] = [
   },
   {
     path: '*',
-    element: <Navigate to="/authentication/login" replace />,
+    element: <Navigate to="/login" replace />,
   },
 ];

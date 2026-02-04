@@ -19,7 +19,7 @@ export const clearTokens = () => {
 
 const redirectToLogin = () => {
   clearTokens();
-  window.location.href = '/autenticacao/login';
+  window.location.href = '/login';
 };
 
 

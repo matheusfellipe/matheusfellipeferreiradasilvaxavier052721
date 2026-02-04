@@ -5,8 +5,8 @@ const HeroContent = () => (
     </span>
 
     <h1 className="text-5xl font-bold leading-tight">
-      Cuidados Especializados para <br />
-      <span className="text-brand">Seus Pets Queridos</span>
+      Cuidados Especializados  <br />
+      <span className="text-brand">para Seus Pets Queridos</span>
     </h1>
 
     <p className="text-gray-600 max-w-lg">

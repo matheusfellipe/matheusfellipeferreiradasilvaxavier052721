@@ -12,16 +12,21 @@
     "prepare": "husky"
   },
   "dependencies": {
+    "@hookform/resolvers": "^5.2.2",
     "@mantine/core": "^8.3.14",
     "@mantine/hooks": "^8.3.14",
     "@tabler/icons-react": "^3.36.1",
     "axios": "^1.13.4",
+    "js-cookie": "^3.0.5",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
-    "react-router-dom": "^7.13.0"
+    "react-hook-form": "^7.71.1",
+    "react-router-dom": "^7.13.0",
+    "zod": "^4.3.6"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
+    "@types/js-cookie": "^3.0.6",
     "@types/node": "^24.10.1",
     "@types/react": "^19.2.5",
     "@types/react-dom": "^19.2.3",

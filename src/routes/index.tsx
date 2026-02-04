@@ -1,15 +1,29 @@
 import HomePage from '@/pages/Home/Home.page';
+import LoginPage from '@/pages/Login/Login.page';
 import ResponsiveLayout from '@/shared/layout/AppLayout';
+import type { RouteObject } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
+import { ProtectedRoute } from './ProtectedRoute';
 
-import { createBrowserRouter } from 'react-router-dom';
 
-export const router = createBrowserRouter([
+export const routes: RouteObject[] = [
   {
-    path: '/',
-    element: <ResponsiveLayout />,
-     children: [
-      { path: '/', element: <HomePage /> },
-     
+    path: 'authentication/login',
+    element: <LoginPage />,
+  },
+  {
+    element: (
+      <ProtectedRoute>
+        <ResponsiveLayout />
+      </ProtectedRoute>
+    ),
+    children: [
+      { path: 'pets', element: <HomePage /> },
+      
     ],
   },
-]);
+  {
+    path: '*',
+    element: <Navigate to="/authentication/login" replace />,
+  },
+];

@@ -2,9 +2,13 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './styles/global.css'
 import './styles/tailwind.css'
-import { RouterProvider } from 'react-router-dom'
-import { router } from './routes/index.tsx'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+
 import { MantineProvider } from '@mantine/core'
+import { routes } from './routes'
+
+
+const router = createBrowserRouter(routes);
 
 
 createRoot(document.getElementById('root')!).render(

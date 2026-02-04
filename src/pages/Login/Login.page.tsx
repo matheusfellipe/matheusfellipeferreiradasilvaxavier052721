@@ -1,89 +1,79 @@
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
+import { Button, Input, PasswordInput } from "@mantine/core";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 
-// 1️⃣ Define the schema
+import type { LoginType } from "@/app/auth/types";
+import { useAuth } from "@/app/auth/useAuth";
+
+
+
 const loginSchema = z.object({
-  username: z.string().min(1, 'Username is required'),
-  password: z.string().min(1, 'Password is required'),
+  username: z.string().min(1, "Username is required"),
+  password: z.string().min(4, "Password must be at least 4 characters"),
 });
 
-type LoginFormInputs = z.infer<typeof loginSchema>;
-
-const LoginPage = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<LoginFormInputs>({
+ const LoginPage = () => {
+  const { register, handleSubmit, formState: { errors } } = useForm<LoginType>({
     resolver: zodResolver(loginSchema),
   });
 
-  const onSubmit = (data: LoginFormInputs) => {
-    console.log('Logging in with:', data);
-    // Replace with your real login logic
+  const { login, isLoggingIn } = useAuth();
+
+  const onSubmit = async (data: LoginType) => {
+    await login(data);
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-50">
-      <div className="w-full max-w-md bg-white p-10 rounded-2xl shadow-lg space-y-6">
-        <h1 className="text-3xl font-bold text-center">Welcome Back</h1>
-        <p className="text-gray-600 text-center">
+    <div className="w-full h-screen flex items-center justify-center bg-[#f7f2ed]">
+      <div className="relative z-10 w-full max-w-md p-8 bg-white rounded-xl shadow-lg backdrop-blur-sm">
+        
+       
+
+        {/* Title */}
+        <h2 className="text-2xl font-bold text-center mb-1">Welcome Back</h2>
+        <p className="text-center text-gray-500 text-sm mb-6">
           Sign in with your username and password
         </p>
 
-        <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
-          <div>
-            <label className="block text-gray-700 mb-1">Username</label>
-            <input
-              type="text"
-              {...register('username')}
-              className={`w-full px-4 py-3 rounded-lg border ${
-                errors.username ? 'border-red-500' : 'border-gray-300'
-              } focus:ring-2 focus:ring-brand focus:outline-none`}
-              placeholder="Enter your username"
-            />
-            {errors.username && (
-              <p className="text-red-500 text-sm mt-1">
-                {errors.username.message}
-              </p>
-            )}
-          </div>
+        {/* Form */}
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
+          <Input
+            placeholder="Username"
+            {...register("username")}
+            error={errors.username?.message}
+            size="md"
+            classNames={{ input: "bg-gray-100 border border-gray-300 focus:border-green-700 focus:bg-white" }}
+          />
+          <PasswordInput
+            placeholder="Password"
+            {...register("password")}
+            error={errors.password?.message}
+            size="md"
+            classNames={{ input: "bg-gray-100 border border-gray-300 focus:border-green-700 focus:bg-white" }}
+          />
 
-          <div>
-            <label className="block text-gray-700 mb-1">Password</label>
-            <input
-              type="password"
-              {...register('password')}
-              className={`w-full px-4 py-3 rounded-lg border ${
-                errors.password ? 'border-red-500' : 'border-gray-300'
-              } focus:ring-2 focus:ring-brand focus:outline-none`}
-              placeholder="Enter your password"
-            />
-            {errors.password && (
-              <p className="text-red-500 text-sm mt-1">
-                {errors.password.message}
-              </p>
-            )}
-          </div>
-
-          <button
+          <Button
             type="submit"
-            className="w-full bg-brand text-white py-3 rounded-lg mt-2"
+            fullWidth
+            disabled={isLoggingIn}
+            className="bg-green-700 hover:bg-green-800"
           >
-            Sign In
-          </button>
+            {isLoggingIn ? "Logging in..." : "Sign In"}
+          </Button>
         </form>
 
-        <div className="text-center text-gray-500 text-sm">
-          Don’t have an account?{' '}
-          <a href="/signup" className="text-brand font-medium">
+        {/* Footer */}
+        <p className="text-center text-gray-500 text-sm mt-6">
+          Don’t have an account?{" "}
+          <a href="/signup" className="text-green-700 font-medium hover:underline">
             Sign Up
           </a>
-        </div>
+        </p>
       </div>
     </div>
   );
 };
+
 
 export default LoginPage;

@@ -40,6 +40,8 @@ export const useAuth = () => {
         message: 'Autenticação bem-sucedida!',
         autoClose: 4000,
       });
+
+      navigate('/home');
     },
     onError: () => {
       showNotification({

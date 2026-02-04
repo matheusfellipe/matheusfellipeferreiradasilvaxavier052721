@@ -18,7 +18,7 @@ export const routes: RouteObject[] = [
       </ProtectedRoute>
     ),
     children: [
-      { path: 'pets', element: <HomePage /> },
+      { path: 'home', element: <HomePage /> },
       
     ],
   },

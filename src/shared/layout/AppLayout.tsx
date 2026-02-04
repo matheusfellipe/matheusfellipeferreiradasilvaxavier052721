@@ -1,8 +1,9 @@
 import { AppShell } from "@mantine/core"
 import { useDisclosure } from "@mantine/hooks";
 import HeaderNav from "./HeaderNav";
+import { Outlet } from "react-router-dom";
 
-const ResponsiveLayout = () => {
+const AppLayout = () => {
 
     const [opened, { toggle }] = useDisclosure();
     return (
@@ -23,13 +24,12 @@ const ResponsiveLayout = () => {
         </AppShell.Navbar>
 
         <AppShell.Main>
-            Navbar is only visible on mobile, links that are rendered in the header on desktop are
-            hidden on mobile in header and rendered in navbar instead.
+           <Outlet/> 
         </AppShell.Main>
         </AppShell>
     )
 }
 
-export default ResponsiveLayout
+export default AppLayout
 
 

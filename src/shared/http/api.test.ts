@@ -33,10 +33,10 @@ describe('API Client - Token Management', () => {
   });
 
   it('should store access token with expiry calculated from seconds', () => {
-    const expiresInSeconds = 7200; // 2 hours
+    const expiresInSeconds = 7200; 
     storeTokens('access-token', 'refresh-token', expiresInSeconds);
 
-    // Token should be stored (actual expiry time is hard to test precisely)
+    
     expect(Cookies.get('access_token')).toBe('access-token');
   });
 });

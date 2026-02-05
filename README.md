@@ -10,37 +10,67 @@ O projeto foi desenvolvido seguindo boas práticas de **arquitetura em camadas**
 ## 🚀 Funcionalidades
 
 ### Pets
-- Listagem de pets com paginação (10 por página)
-- Busca por nome
-- Detalhamento do pet
-- Cadastro e edição
-- Upload de foto
-- Exibição do tutor vinculado (quando existir)
+- ✅ Listagem de pets com paginação (10 por página)
+- ✅ Busca por nome e raça com debounce (500ms)
+- ✅ Detalhamento completo do pet
+- ✅ Cadastro e edição com validação
+- ✅ Upload e remoção de foto
+- ✅ Exibição do tutor vinculado (quando existir)
 
 ### Tutores
-- Cadastro e edição de tutores
-- Upload de foto
-- Listagem de pets vinculados
-- Vincular e remover pets
+- ✅ Cadastro e edição de tutores com validação
+- ✅ Upload e remoção de foto
+- ✅ Listagem de pets vinculados
+- ✅ Vincular e remover pets
+- ✅ Máscaras para telefone e CPF
 
 ### Autenticação
-- Login via API
-- Gerenciamento de expiração e refresh de token
+- ✅ Login via API com validação
+- ✅ Gerenciamento automático de expiração de token
+- ✅ Refresh token automático
+- ✅ Proteção de rotas privadas
 
 ---
 
 ## 🧱 Arquitetura
 
-O projeto adota uma **arquitetura em camadas**, com foco em separação de responsabilidades:
+O projeto adota uma **arquitetura em camadas**, com foco em separação de responsabilidades e manutenibilidade:
 
-- **API layer**: comunicação HTTP (Axios)
-- **Server State**: React Query é responsável por: Cache de dados, 
-Sincronização reativa entre telas
-Paginação e busca
-Refetch, invalidação e controle de staleness
-React Query atua como a principal fonte de verdade para dados remotos, cumprindo o papel que seria tradicionalmente desempenhado por estruturas reativas como BehaviorSubject.
-- **Facade (ViewModel)**: hooks que orquestram regras de negócio e expõem uma interface simples para a UI
-- **UI**: componentes desacoplados de regras e infraestrutura
+### Estrutura de Camadas
+
+**API Layer** (`shared/http/api.ts`)
+- Cliente Axios configurado com interceptors
+- Gerenciamento automático de tokens (Bearer)
+- Refresh token automático em caso de 401
+- Redirecionamento para login quando necessário
+
+**Service Layer** (`app/*/services`)
+- Encapsulamento das chamadas HTTP
+- Transformação de dados da API
+- Tratamento de erros específicos
+
+**Server State** (React Query)
+- Cache inteligente de dados remotos
+- Sincronização reativa entre componentes
+- Paginação e invalidação automática
+- Controle de staleness e refetch
+- React Query atua como fonte única de verdade para dados do servidor
+
+**Facade/ViewModel** (`app/*/useFacade`)
+- Hooks que orquestram lógica de negócio
+- Debounce de buscas (500ms)
+- Gerenciamento de paginação
+- Interface simplificada para a UI
+- Abstração de complexidade
+
+**UI Components**
+- Componentes desacoplados de lógica de negócio
+- Reutilizáveis e testáveis
+- Responsivos (mobile-first)
+- Accessíveis
+
+### Lazy Loading
+Todas as páginas principais utilizam `React.lazy()` para code-splitting automático, melhorando o tempo de carregamento inicial.
 
 ---
 
@@ -57,17 +87,47 @@ React Query atua como a principal fonte de verdade para dados remotos, cumprindo
 
 
 ### UI e Formulários
-- **Tailwind CSS** – estilização e layout responsivo
-- **Mantine** – componentes de formulário e modais (uso pontual)
-- **React Hook Form** – gerenciamento e validação de formulários
-- **React Mask** - máscaras no input do formulário
+- **Tailwind CSS** – estilização e layout responsivo (mobile-first)
+- **Mantine** – componentes UI (forms, modals, tables, pagination)
+- **React Hook Form** – gerenciamento de formulários com validação
+- **Zod** – validação de schema TypeScript-first
+- **React IMask** – máscaras para telefone e CPF
 
 ### Qualidade e Testes
 - **Vitest** – testes unitários
 - **ESLint** – linting
 - **Prettier** – formatação de código
 - **Husky** – hooks de pré-commit
-- **React Test Library**  - testes de componentes
+- **React Testing Library** – testes de componentes
+
+#### Estratégia de Testes
+
+Os testes foram aplicados estrategicamente nos **componentes críticos** da aplicação:
+
+**Componentes Testados (10 arquivos de teste):**
+- ✅ **Autenticação** (`useAuth.test.tsx`) - Hook de autenticação e gerenciamento de token
+- ✅ **Formulários** (`PetForm.test.tsx`, `TutorForm.test.tsx`) - Validação, submissão e upload de fotos
+- ✅ **Listas e Cards** (`PetGrid.test.tsx`, `PetCard.test.tsx`, `TutorList.test.tsx`, `TutorCard.test.tsx`) - Renderização de dados e interações
+- ✅ **Filtros e Busca** (`FilterSection.test.tsx`, `PetsSection.test.tsx`) - Funcionalidades de busca com debounce
+- ✅ **Login** (`LoginPage.test.tsx`) - Fluxo de autenticação
+
+**Cobertura Focada:**
+- Componentes reutilizáveis e de alta complexidade
+- Lógica de negócio crítica (autenticação, formulários)
+- Interações do usuário (cliques, submissões, buscas)
+- Renderização condicional e estados de loading/erro
+
+**Executar Testes:**
+```bash
+# Modo watch (desenvolvimento)
+npm test
+
+# Execução única (CI/CD)
+npm run test:ci
+```
+
+**Integração com Docker:**
+Os testes são executados automaticamente durante o build do Docker, garantindo que apenas código validado seja containerizado.
 
 ---
 

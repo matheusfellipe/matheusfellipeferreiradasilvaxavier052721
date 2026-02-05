@@ -23,5 +23,5 @@ export interface TutorFormData {
   email: string;
   telefone: string;
   endereco: string;
-  cpf: number;
+  cpf: string;
 }

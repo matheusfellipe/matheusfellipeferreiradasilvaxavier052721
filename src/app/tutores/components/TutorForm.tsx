@@ -1,17 +1,18 @@
-import { Button, TextInput, NumberInput, FileInput, Image, ActionIcon, Text, Textarea } from '@mantine/core';
+import { Button, TextInput, FileInput, Image, ActionIcon, Text, Textarea, Input } from '@mantine/core';
 import { IconUpload, IconTrash } from '@tabler/icons-react';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useState } from 'react';
+import { IMaskInput } from 'react-imask';
 import type { Tutor } from '../types';
 
 const tutorFormSchema = z.object({
   nome: z.string().min(1, 'Nome é obrigatório'),
   email: z.string().email('Email inválido').min(1, 'Email é obrigatório'),
-  telefone: z.string().min(1, 'Telefone é obrigatório'),
+  telefone: z.string().min(14, 'Telefone inválido'),
   endereco: z.string().min(1, 'Endereço é obrigatório'),
-  cpf: z.number().min(10000000000, 'CPF deve ter 11 dígitos').max(99999999999, 'CPF deve ter 11 dígitos'),
+  cpf: z.string().min(14, 'CPF inválido'),
 });
 
 type TutorFormData = z.infer<typeof tutorFormSchema>;
@@ -51,7 +52,7 @@ export const TutorForm = ({
       email: initialData?.email || '',
       telefone: initialData?.telefone || '',
       endereco: initialData?.endereco || '',
-      cpf: initialData?.cpf || 0,
+      cpf: initialData?.cpf ? String(initialData.cpf) : '',
     },
   });
 
@@ -179,28 +180,43 @@ export const TutorForm = ({
           size="md"
         />
 
-        <TextInput
-          label="Telefone"
-          placeholder="Ex: (11) 98765-4321"
-          {...register('telefone')}
-          error={errors.telefone?.message}
-          required
-          size="md"
+        <Controller
+          name="telefone"
+          control={control}
+          render={({ field }) => (
+            <Input.Wrapper
+              label="Telefone"
+              required
+              error={errors.telefone?.message}
+              size="md"
+            >
+              <Input
+                component={IMaskInput}
+                mask="(00) 00000-0000"
+                placeholder="(00) 00000-0000"
+                {...field}
+              />
+            </Input.Wrapper>
+          )}
         />
 
         <Controller
           name="cpf"
           control={control}
           render={({ field }) => (
-            <NumberInput
+            <Input.Wrapper
               label="CPF"
-              placeholder="Ex: 12345678901"
-              hideControls
-              {...field}
-              error={errors.cpf?.message}
               required
+              error={errors.cpf?.message}
               size="md"
-            />
+            >
+              <Input
+                component={IMaskInput}
+                mask="000.000.000-00"
+                placeholder="000.000.000-00"
+                {...field}
+              />
+            </Input.Wrapper>
           )}
         />
       </div>

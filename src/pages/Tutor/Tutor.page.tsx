@@ -19,11 +19,15 @@ const TutorPage = () => {
 
   const handleSubmit = async (data: TutorFormData) => {
     try {
+      // Remove mask from CPF (convert "000.000.000-00" to number)
+      const cpfNumber = Number(data.cpf.replace(/\D/g, ''));
+      const tutorData = { ...data, cpf: cpfNumber };
+      
       if (isEditMode && id) {
-        await updateTutorMutation.mutateAsync({ id, data });
+        await updateTutorMutation.mutateAsync({ id, data: tutorData });
       } else {
         // Create tutor first
-        const newTutor = await createTutorMutation.mutateAsync(data);
+        const newTutor = await createTutorMutation.mutateAsync(tutorData);
         
         // Upload photo if one was selected
         if (pendingPhoto && newTutor.id) {

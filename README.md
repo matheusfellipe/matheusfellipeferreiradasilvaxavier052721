@@ -63,6 +63,7 @@ O projeto adota uma **arquitetura em camadas**, com foco em separação de respo
 - **ESLint** – linting
 - **Prettier** – formatação de código
 - **Husky** – hooks de pré-commit
+- **React Test Library**  
 
 ---
 
@@ -77,3 +78,13 @@ O projeto adota uma **arquitetura em camadas**, com foco em separação de respo
 ```bash
 git clone https://github.com/matheusfellipe/matheusfellipeferreiradasilvaxavier052721
 cd test-pet
+
+### 3. Buildar aplicação em container
+docker compose up --build -d
+
+
+### 4. Acessar a aplicação
+
+Após subir os containers, abra seu navegador e clique no link abaixo:
+
+[Open Rede Busca](http://localhost:3000)

@@ -34,8 +34,11 @@ O projeto foi desenvolvido seguindo boas práticas de **arquitetura em camadas**
 O projeto adota uma **arquitetura em camadas**, com foco em separação de responsabilidades:
 
 - **API layer**: comunicação HTTP (Axios)
-- **Server State**: React Query (cache, paginação, refetch)
-- **Client State**: Zustand (substituindo BehaviorSubject de forma idiomática em React)
+- **Server State**: React Query é responsável por: Cache de dados, 
+Sincronização reativa entre telas
+Paginação e busca
+Refetch, invalidação e controle de staleness
+React Query atua como a principal fonte de verdade para dados remotos, cumprindo o papel que seria tradicionalmente desempenhado por estruturas reativas como BehaviorSubject.
 - **Facade (ViewModel)**: hooks que orquestram regras de negócio e expõem uma interface simples para a UI
 - **UI**: componentes desacoplados de regras e infraestrutura
 

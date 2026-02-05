@@ -1,10 +1,10 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, createRoutesFromElements, RouterProvider } from "react-router-dom";
 import { routes } from "./routes";
 import type { AxiosError } from "axios";
 
 
-const router = createBrowserRouter(routes);
+const router = createBrowserRouter(createRoutesFromElements(routes));
 
 const queryClient = new QueryClient({
   defaultOptions: {

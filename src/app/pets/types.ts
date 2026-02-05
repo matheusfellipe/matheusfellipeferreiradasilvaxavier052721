@@ -9,3 +9,7 @@ export interface Pet {
   tutorName?: string;
   location?: string;
 }
+
+export interface PetFormData{
+    nome: string
+}

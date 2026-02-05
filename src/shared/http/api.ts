@@ -54,17 +54,18 @@ apiClient.interceptors.response.use(
 
       try {
         
-        const response = await axios.post(
+        const response = await axios.put(
           `${API_BASE_URL}/autenticacao/refresh`,
-          { refreshToken },
+          null,
           {
-            headers: { Authorization: `Bearer ${accessToken}` },
+            headers: { Authorization: refreshToken },
           }
         );
 
         const { access_token: newAccessToken, refresh_token: newRefreshToken, expires_in } = response.data;
 
         
+        clearTokens();
         storeTokens(newAccessToken, newRefreshToken, expires_in);
 
         

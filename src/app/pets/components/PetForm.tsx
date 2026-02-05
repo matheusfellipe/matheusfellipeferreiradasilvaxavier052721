@@ -43,11 +43,20 @@ export const PetForm = ({ initialData, onSubmit, onCancel, isLoading = false, mo
   });
 
   const handleFileChange = async (file: File | null) => {
-    if (file && onPhotoUpload) {
+    if (file) {
       setSelectedFile(file);
-      await onPhotoUpload(file);
-      setSelectedFile(null);
+      // In edit mode, upload immediately. In create mode, just store for later
+      if (mode === 'edit' && onPhotoUpload) {
+        await onPhotoUpload(file);
+        setSelectedFile(null);
+      } else if (mode === 'create' && onPhotoUpload) {
+        await onPhotoUpload(file);
+      }
     }
+  };
+
+  const handleRemoveSelectedFile = () => {
+    setSelectedFile(null);
   };
 
   const handleDeletePhoto = async () => {
@@ -59,11 +68,10 @@ export const PetForm = ({ initialData, onSubmit, onCancel, isLoading = false, mo
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
       {/* Photo Section */}
-      {mode === 'edit' && (
-        <div className="space-y-4">
-          <Text size="sm" fw={500}>Foto do Pet</Text>
-          
-          {initialData?.foto ? (
+      <div className="space-y-4">
+        <Text size="sm" fw={500}>Foto do Pet</Text>
+        
+        {mode === 'edit' && initialData?.foto ? (
             <div className="space-y-4">
               <div className="relative inline-block w-[180px]">
                 <Image
@@ -89,6 +97,35 @@ export const PetForm = ({ initialData, onSubmit, onCancel, isLoading = false, mo
               </div>
               <Text size="xs" c="dimmed">Clique no ícone da lixeira para remover a foto atual</Text>
             </div>
+          ) : selectedFile ? (
+            <div className="space-y-4">
+              <div className="relative inline-block w-[180px]">
+                <Image
+                  src={URL.createObjectURL(selectedFile)}
+                  alt="Pré-visualização"
+                  h={120}
+                  w={180}
+                  fit="cover"
+                  radius="md"
+                  className="bg-gray-50"
+                />
+                <ActionIcon
+                  color="red"
+                  variant="filled"
+                  size="lg"
+                  radius="xl"
+                  className="absolute top-2 right-2"
+                  onClick={handleRemoveSelectedFile}
+                >
+                  <IconTrash size={18} />
+                </ActionIcon>
+              </div>
+              <Text size="xs" c="dimmed">
+                {mode === 'create' 
+                  ? 'A foto será enviada após o cadastro do pet'
+                  : 'Clique no ícone da lixeira para remover'}
+              </Text>
+            </div>
           ) : (
             <div className="space-y-2">
               <FileInput
@@ -100,11 +137,14 @@ export const PetForm = ({ initialData, onSubmit, onCancel, isLoading = false, mo
                 disabled={isUploadingPhoto}
                 size="md"
               />
-              <Text size="xs" c="dimmed">Formatos aceitos: JPG, PNG, GIF</Text>
+              <Text size="xs" c="dimmed">
+                {mode === 'create' 
+                  ? 'A foto será enviada após o cadastro do pet'
+                  : 'Formatos aceitos: JPG, PNG, GIF'}
+              </Text>
             </div>
           )}
-        </div>
-      )}
+      </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <TextInput

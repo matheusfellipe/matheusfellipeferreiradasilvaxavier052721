@@ -3,11 +3,13 @@ import { PetForm } from '@/app/pets/components/PetForm';
 import { Card, Title, Text, Loader, Alert, Container } from '@mantine/core';
 import type { PetFormData } from '@/app/pets/types';
 import { usePet, useCreatePet, useUpdatePet, useUploadPetPhoto, useDeletePetPhoto } from '@/app/pets/usePets';
+import { useState } from 'react';
 
 const PetPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const isEditMode = Boolean(id);
+  const [pendingPhoto, setPendingPhoto] = useState<File | null>(null);
 
   const { data: pet, isLoading, error } = usePet(id);
   const createPetMutation = useCreatePet();
@@ -20,7 +22,16 @@ const PetPage = () => {
       if (isEditMode && id) {
         await updatePetMutation.mutateAsync({ id, data });
       } else {
-        await createPetMutation.mutateAsync(data);
+        // Create pet first
+        const newPet = await createPetMutation.mutateAsync(data);
+        
+        // Upload photo if one was selected
+        if (pendingPhoto && newPet.id) {
+          await uploadPhotoMutation.mutateAsync({ 
+            petId: String(newPet.id), 
+            file: pendingPhoto 
+          });
+        }
       }
       navigate(-1);
     } catch (error) {
@@ -29,8 +40,11 @@ const PetPage = () => {
   };
 
   const handlePhotoUpload = async (file: File) => {
-    if (id) {
+    if (isEditMode && id) {
       await uploadPhotoMutation.mutateAsync({ petId: id, file });
+    } else {
+      // In create mode, store the file to upload after pet creation
+      setPendingPhoto(file);
     }
   };
 

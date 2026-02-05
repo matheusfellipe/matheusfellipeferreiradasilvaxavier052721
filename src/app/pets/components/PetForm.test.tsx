@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { screen } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import { renderWithProviders } from '../../../test/test-utils';
 import userEvent from '@testing-library/user-event';
 import { PetForm } from './PetForm';
@@ -71,12 +71,12 @@ describe('PetForm', () => {
 
     await user.click(screen.getByRole('button', { name: /cadastrar pet/i }));
 
-    
-    expect(mockOnSubmit).toHaveBeenCalled();
-    expect(mockOnSubmit.mock.calls[0][0]).toEqual({
-      nome: 'Luna',
-      raca: 'Husky',
-      idade: 3,
+    await waitFor(() => {
+      expect(mockOnSubmit).toHaveBeenCalled();
+      const submittedData = mockOnSubmit.mock.calls[0][0];
+      expect(submittedData.nome).toBe('Luna');
+      expect(submittedData.raca).toBe('Husky');
+      expect(submittedData.idade).toBe(3);
     });
   });
 

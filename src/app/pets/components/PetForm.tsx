@@ -45,7 +45,7 @@ export const PetForm = ({ initialData, onSubmit, onCancel, isLoading = false, mo
   const handleFileChange = async (file: File | null) => {
     if (file) {
       setSelectedFile(file);
-      // In edit mode, upload immediately. In create mode, just store for later
+    
       if (mode === 'edit' && onPhotoUpload) {
         await onPhotoUpload(file);
         setSelectedFile(null);
@@ -67,7 +67,7 @@ export const PetForm = ({ initialData, onSubmit, onCancel, isLoading = false, mo
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-      {/* Photo Section */}
+      
       <div className="space-y-4">
         <Text size="sm" fw={500}>Foto do Pet</Text>
         
@@ -169,9 +169,12 @@ export const PetForm = ({ initialData, onSubmit, onCancel, isLoading = false, mo
           render={({ field }) => (
             <NumberInput
               label="Idade"
-              placeholder="Idade em anos"
+              placeholder="Ex: 05"
               min={0}
               max={50}
+              step={1}
+              stepHoldDelay={500}
+              stepHoldInterval={100}
               {...field}
               error={errors.idade?.message}
               required

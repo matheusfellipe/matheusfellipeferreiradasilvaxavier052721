@@ -90,4 +90,4 @@ docker compose up --build -d
 
 Após subir os containers, abra seu navegador e clique no link abaixo:
 
-[Open Rede Busca](http://localhost:3000)
+[Open Meet Tutors](http://localhost:3000)

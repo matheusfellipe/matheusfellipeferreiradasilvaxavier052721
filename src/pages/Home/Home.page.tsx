@@ -1,6 +1,5 @@
 import HeroContent from "./section/HeroContent";
 import HeroImages from "./section/HeroImages";
-import FilterSection from "./section/FilterSection";
 import PetsSection from "./section/PetsSection";
 import Footer from "@/shared/layout/Footer";
 
@@ -14,7 +13,6 @@ const HomePage = () => {
         </div>
       </section>
       
-      <FilterSection />
       <PetsSection />
       <Footer />
     </div>

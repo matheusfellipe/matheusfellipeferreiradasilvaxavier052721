@@ -4,14 +4,16 @@ import { usePets } from './usePets';
 
 export const usePetsFacade = () => {
   const [page, setPage] = useState(0);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [nomeSearch, setNomeSearch] = useState('');
+  const [racaSearch, setRacaSearch] = useState('');
   const pageSize = 10;
 
 
   const { data, isLoading, error, refetch } = usePets({
     page,
     size: pageSize,
-    search: searchTerm || undefined,
+    ...(nomeSearch && { nome: nomeSearch }),
+    ...(racaSearch && { raca: racaSearch }),
   });
 
   
@@ -34,11 +36,16 @@ export const usePetsFacade = () => {
     previousPage: () => setPage((prev) => Math.max(prev - 1, 0)),
     
     
-    search: (term: string) => {
-      setSearchTerm(term);
+    searchByNome: (term: string) => {
+      setNomeSearch(term);
       setPage(0); 
     },
-    searchTerm,
+    searchByRaca: (term: string) => {
+      setRacaSearch(term);
+      setPage(0);
+    },
+    nomeSearch,
+    racaSearch,
     
    
     refresh: refetch,

@@ -13,20 +13,22 @@ export interface PetListResponse {
 export interface PetListParams {
   page?: number;
   size?: number;
-  search?: string;
+  nome?: string;
+  raca?: string;
 }
 
 export class PetService {
   private basePath = '/v1/pets';
 
   async listPets(params: PetListParams = {}): Promise<PetListResponse> {
-    const { page = 0, size = 10, search } = params;
+    const { page = 0, size = 10, nome, raca } = params;
     
     const response = await apiClient.get<PetListResponse>(this.basePath, {
       params: {
         page,
         size,
-        ...(search && { search }),
+        ...(nome && { nome }),
+        ...(raca && { raca }),
       },
     });
 

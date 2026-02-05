@@ -1,10 +1,15 @@
 import { Input, Button } from '@mantine/core';
 import { IconSearch, IconPlus } from '@tabler/icons-react';
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const FilterSection = () => {
-  const [searchTerm, setSearchTerm] = useState('');
+interface FilterSectionProps {
+  nomeValue: string;
+  racaValue: string;
+  onSearchNome: (term: string) => void;
+  onSearchRaca: (term: string) => void;
+}
+
+const FilterSection = ({ nomeValue, racaValue, onSearchNome, onSearchRaca }: FilterSectionProps) => {
   const navigate = useNavigate();
 
   const handleRegisterPet = () => {
@@ -35,20 +40,34 @@ const FilterSection = () => {
             </Button>
           </div>
           
-          <Input
-            size="lg"
-            placeholder="Buscar por nome, especialidade, localização..."
-            leftSection={<IconSearch size={20} />}
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full"
-            styles={{
-              input: {
-                borderRadius: '12px',
-                borderColor: '#E0D6CA',
-              },
-            }}
-          />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <Input
+              size="lg"
+              placeholder="Buscar por nome..."
+              leftSection={<IconSearch size={20} />}
+              value={nomeValue}
+              onChange={(e) => onSearchNome(e.target.value)}
+              styles={{
+                input: {
+                  borderRadius: '12px',
+                  borderColor: '#E0D6CA',
+                },
+              }}
+            />
+            <Input
+              size="lg"
+              placeholder="Buscar por raça..."
+              leftSection={<IconSearch size={20} />}
+              value={racaValue}
+              onChange={(e) => onSearchRaca(e.target.value)}
+              styles={{
+                input: {
+                  borderRadius: '12px',
+                  borderColor: '#E0D6CA',
+                },
+              }}
+            />
+          </div>
         </div>
       </div>
     </section>

@@ -89,3 +89,53 @@ export const useDeletePet = () => {
     },
   });
 };
+
+export const useUploadPetPhoto = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ petId, file }: { petId: string; file: File }) =>
+      petService.uploadPetPhoto(petId, file),
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({ queryKey: [PETS_QUERY_KEY, variables.petId] });
+      queryClient.invalidateQueries({ queryKey: [PETS_QUERY_KEY] });
+      showNotification({
+        title: 'Sucesso',
+        message: 'Foto enviada com sucesso!',
+        color: 'green',
+      });
+    },
+    onError: () => {
+      showNotification({
+        title: 'Erro',
+        message: 'Falha ao enviar a foto. Tente novamente.',
+        color: 'red',
+      });
+    },
+  });
+};
+
+export const useDeletePetPhoto = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ petId, fotoId }: { petId: string; fotoId: number }) =>
+      petService.deletePetPhoto(petId, fotoId),
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({ queryKey: [PETS_QUERY_KEY, variables.petId] });
+      queryClient.invalidateQueries({ queryKey: [PETS_QUERY_KEY] });
+      showNotification({
+        title: 'Sucesso',
+        message: 'Foto removida com sucesso!',
+        color: 'green',
+      });
+    },
+    onError: () => {
+      showNotification({
+        title: 'Erro',
+        message: 'Falha ao remover a foto. Tente novamente.',
+        color: 'red',
+      });
+    },
+  });
+};

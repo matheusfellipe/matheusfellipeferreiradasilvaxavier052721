@@ -53,6 +53,21 @@ export class PetService {
   async deletePet(id: string): Promise<void> {
     await apiClient.delete(`${this.basePath}/${id}`);
   }
+
+  async uploadPetPhoto(petId: string, file: File): Promise<void> {
+    const formData = new FormData();
+    formData.append('foto', file);
+    
+    await apiClient.post(`${this.basePath}/${petId}/fotos`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+  }
+
+  async deletePetPhoto(petId: string, fotoId: number): Promise<void> {
+    await apiClient.delete(`${this.basePath}/${petId}/fotos/${fotoId}`);
+  }
 }
 
 export const petService = new PetService();

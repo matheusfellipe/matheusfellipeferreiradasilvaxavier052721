@@ -58,7 +58,8 @@ apiClient.interceptors.response.use(
           `${API_BASE_URL}/autenticacao/refresh`,
           null,
           {
-            headers: { Authorization: `Bearer ${refreshToken}` },
+            headers: { Authorization: `Bearer ${refreshToken}`, Accept: 'application/json' },
+            
           }
         );
 

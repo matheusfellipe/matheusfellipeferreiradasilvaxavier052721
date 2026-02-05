@@ -1,3 +1,5 @@
+import type { Tutor } from '../tutores/types';
+
 export interface PetPhoto {
   id: number;
   nome: string;
@@ -13,8 +15,9 @@ export interface Pet {
   foto?: PetPhoto;
   especie?: string;
   descricao?: string;
-  tutor?: string;
+  tutor?: string; 
   localizacao?: string;
+  tutores?: Tutor[]; 
 }
 
 export interface PetFormData {

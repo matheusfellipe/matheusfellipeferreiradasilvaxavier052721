@@ -1,6 +1,6 @@
 import { useParams, useNavigate } from 'react-router-dom';
-import { Container, Card, Image, Text, Badge, Group, Button, Loader, Alert, Stack } from '@mantine/core';
-import { IconArrowLeft, IconEdit, IconMapPin, IconUser } from '@tabler/icons-react';
+import { Container, Card, Image, Text, Badge, Group, Button, Loader, Alert, Stack, Avatar, Title } from '@mantine/core';
+import { IconArrowLeft, IconEdit } from '@tabler/icons-react';
 import { useQuery } from '@tanstack/react-query';
 import { petService } from '@/app/pets/pet.service';
 
@@ -76,9 +76,12 @@ const PetDetailPage = () => {
               <div>
                 <Group justify="space-between" align="flex-start">
                   <div>
-                    <Text size="xl" fw={700} className="mb-2">
-                      {pet.nome}
-                    </Text>
+                    <Group gap="xs" className="mb-2">
+                        <Title order={2}>{pet.nome}</Title>
+                        <Badge color="blue" variant="light">
+                            Pet
+                        </Badge>
+                    </Group>
                     <Text size="md" c="dimmed">
                       {pet.raca || pet.especie}
                     </Text>
@@ -101,17 +104,6 @@ const PetDetailPage = () => {
               )}
 
               <div className="space-y-3">
-                {pet.especie && (
-                  <Group gap="xs">
-                    <Text size="sm" fw={600}>
-                      Espécie:
-                    </Text>
-                    <Text size="sm" c="dimmed">
-                      {pet.especie}
-                    </Text>
-                  </Group>
-                )}
-
                 {pet.raca && (
                   <Group gap="xs">
                     <Text size="sm" fw={600}>
@@ -123,29 +115,54 @@ const PetDetailPage = () => {
                   </Group>
                 )}
 
-                {pet.tutor && (
-                  <Group gap="xs">
-                    <IconUser size={16} className="text-gray-500" />
-                    <Text size="sm" fw={600}>
-                      Tutor:
-                    </Text>
-                    <Text size="sm" c="dimmed">
-                      {pet.tutor}
-                    </Text>
-                  </Group>
-                )}
+                        {pet.tutores && pet.tutores.length > 0 && (
+                        <div>
+                            <Text size="sm" fw={600} className="mb-2">
+                            {pet.tutores.length === 1 ? 'Tutor' : 'Tutores'}
+                            </Text>
 
-                {pet.localizacao && (
-                  <Group gap="xs">
-                    <IconMapPin size={16} className="text-gray-500" />
-                    <Text size="sm" fw={600}>
-                      Localização:
-                    </Text>
-                    <Text size="sm" c="dimmed">
-                      {pet.localizacao}
-                    </Text>
-                  </Group>
-                )}
+                        <div className="space-y-2">
+                        {pet.tutores.map((tutor) => (
+                            <Card key={tutor.id} padding="sm" radius="sm" withBorder>
+                            <Group gap="sm" align="center" wrap="nowrap">
+                                <Avatar
+                                src={tutor.foto?.url}
+                                alt={tutor.nome}
+                                size="md"      
+                                radius="xl"   
+                                >
+                                {tutor.nome.charAt(0)}
+                                </Avatar>
+
+                                <div className="flex-1 min-w-0">
+                                <Text size="sm" fw={600} truncate>
+                                    {tutor.nome}
+                                </Text>
+
+                                {tutor.email && (
+                                    <Text size="xs" c="dimmed" truncate>
+                                    {tutor.email}
+                                    </Text>
+                                )}
+
+                                {tutor.telefone && (
+                                    <Text size="xs" c="dimmed">
+                                    {tutor.telefone}
+                                    </Text>
+                                )}
+                                {tutor.endereco && (
+                                    <Text size="xs" c="dimmed" truncate>
+                                    📍 {tutor.endereco}
+                                    </Text>
+                                )}
+                                </div>
+                            </Group>
+                            </Card>
+                        ))}
+                        </div>
+                    </div>
+                    )}
+
               </div>
             </Stack>
           </div>

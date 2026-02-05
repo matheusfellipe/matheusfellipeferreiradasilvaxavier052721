@@ -14,42 +14,7 @@ const Footer = () => {
             </Text>
           </div>
 
-          <div className="space-y-3">
-            <Text size="sm" fw={600} c="white">
-              Links Rápidos
-            </Text>
-            <div className="flex flex-col gap-2">
-              <Anchor href="#" size="sm" c="gray.4" className="hover:text-white">
-                Sobre Nós
-              </Anchor>
-              <Anchor href="#" size="sm" c="gray.4" className="hover:text-white">
-                Nossos Pets
-              </Anchor>
-              <Anchor href="#" size="sm" c="gray.4" className="hover:text-white">
-                Tutores
-              </Anchor>
-              <Anchor href="#" size="sm" c="gray.4" className="hover:text-white">
-                Contato
-              </Anchor>
-            </div>
-          </div>
-
-          <div className="space-y-3">
-            <Text size="sm" fw={600} c="white">
-              Contato
-            </Text>
-            <div className="flex flex-col gap-2">
-              <Text size="sm" c="gray.4">
-                contato@testpet.com.br
-              </Text>
-              <Text size="sm" c="gray.4">
-                (11) 1234-5678
-              </Text>
-              <Text size="sm" c="gray.4">
-                São Paulo, SP - Brasil
-              </Text>
-            </div>
-          </div>
+      
         </div>
 
         <div className="border-t border-gray-700 pt-6">

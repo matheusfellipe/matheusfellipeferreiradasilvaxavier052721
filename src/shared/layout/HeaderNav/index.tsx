@@ -1,4 +1,4 @@
-import { Burger, ActionIcon, Tooltip } from '@mantine/core';
+import { Burger, ActionIcon, Tooltip, Button, Group } from '@mantine/core';
 import { IconPaw, IconDoorExit } from '@tabler/icons-react';
 import { useNavigate } from 'react-router-dom';
 import AuthService from '@/app/auth/auth.service';
@@ -42,6 +42,15 @@ const HeaderNav = ({ opened, toggle }: HeaderNavProps) => {
           Meet Pets
         </span>
       </div>
+
+      <Group gap="md" visibleFrom="sm">
+        <Button variant="subtle" color="dark" size="sm">
+          Quero ser Tutor
+        </Button>
+        <Button variant="filled" color="green" size="sm">
+          Tutores
+        </Button>
+      </Group>
 
       <Tooltip label="Logout" position="bottom">
         <ActionIcon

@@ -1,3 +1,5 @@
+import type { Pet } from '../pets/types';
+
 export interface TutorPhoto {
   id: number;
   nome: string;
@@ -13,6 +15,7 @@ export interface Tutor {
   endereco: string;
   cpf: number;
   foto?: TutorPhoto;
+  pets?: Pet[];
 }
 
 export interface TutorFormData {

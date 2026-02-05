@@ -1,4 +1,4 @@
-import { Card, Text, Group, Image, Button, Avatar } from '@mantine/core';
+import { Card, Text, Group, Image, Button, Avatar, Badge } from '@mantine/core';
 import { IconMail, IconPhone, IconMapPin, IconEdit, IconEye } from '@tabler/icons-react';
 import type { Tutor } from '../types';
 
@@ -40,9 +40,14 @@ export const TutorCard = ({ tutor, onEdit, onViewDetails }: TutorCardProps) => {
 
       <div className="mt-4 space-y-3 flex-1 flex flex-col">
         <div>
-          <Text fw={600} size="lg">
-            {tutor.nome}
-          </Text>
+          <Group gap="xs" className="mb-1">
+            <Text fw={600} size="lg">
+              {tutor.nome}
+            </Text>
+            <Badge color="blue" variant="light" size="sm">
+              Tutor
+            </Badge>
+          </Group>
           {tutor.cpf && (
             <Text size="xs" c="dimmed" className="font-mono">
               CPF: {tutor.cpf.toString().padStart(11, '0').replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4')}

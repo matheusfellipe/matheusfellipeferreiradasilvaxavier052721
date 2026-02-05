@@ -1,6 +1,6 @@
 import { useParams, useNavigate } from 'react-router-dom';
-import { Container, Card, Image, Text, Group, Button, Loader, Alert, Stack, Avatar, Title } from '@mantine/core';
-import { IconArrowLeft, IconEdit, IconMail, IconPhone, IconMapPin } from '@tabler/icons-react';
+import { Container, Card, Image, Text, Group, Button, Loader, Alert, Stack, Avatar, Title, Badge, SimpleGrid } from '@mantine/core';
+import { IconArrowLeft, IconEdit, IconMail, IconPhone, IconMapPin, IconPaw } from '@tabler/icons-react';
 import { useQuery } from '@tanstack/react-query';
 import { tutorService } from '@/app/tutores/tutor.service';
 
@@ -141,6 +141,56 @@ const TutorDetailPage = () => {
             </Stack>
           </div>
         </Card>
+
+        {/* Pets Section */}
+        {tutor.pets && tutor.pets.length > 0 && (
+          <Card shadow="md" padding="xl" radius="md">
+            <div className="space-y-4">
+              <Group gap="xs">
+                <IconPaw size={24} className="text-green-600" />
+                <Title order={3}>Pets do Tutor</Title>
+                <Badge color="green" variant="light" size="lg">
+                  {tutor.pets.length}
+                </Badge>
+              </Group>
+
+              <SimpleGrid cols={{ base: 1, sm: 2, md: 3 }} spacing="md">
+                {tutor.pets.map((pet) => (
+                  <Card
+                    key={pet.id}
+                    shadow="sm"
+                    padding="md"
+                    radius="md"
+                    withBorder
+                    className="hover:shadow-lg transition-shadow cursor-pointer"
+                    onClick={() => navigate(`/pets/${pet.id}`)}
+                  >
+                    <Card.Section className="h-32 overflow-hidden bg-gray-50">
+                      <Image
+                        src={pet.foto?.url}
+                        h="100%"
+                        w="100%"
+                        fit="cover"
+                        alt={pet.nome}
+                      />
+                    </Card.Section>
+                    <div className="mt-3">
+                      <Text fw={600} size="md">
+                        {pet.nome}
+                      </Text>
+                      <Text size="sm" c="dimmed">
+                        {pet.raca}
+                      </Text>
+                      <Badge color="green" variant="light" size="sm" className="mt-2">
+                        {pet.idade} {pet.idade === 1 ? 'ano' : 'anos'}
+                      </Badge>
+                    </div>
+                  </Card>
+                ))}
+              </SimpleGrid>
+            </div>
+          </Card>
+        )}
       </div>
     </Container>
   );

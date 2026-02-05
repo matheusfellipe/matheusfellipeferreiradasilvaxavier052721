@@ -14,6 +14,7 @@ export const storeTokens = (accessToken: string, refreshToken: string, expiresIn
 export const clearTokens = () => {
   Cookies.remove('access_token');
   Cookies.remove('refresh_token');
+  Cookies.remove('expires_in');
 };
 
 
@@ -42,27 +43,27 @@ apiClient.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
     const refreshToken = Cookies.get('refresh_token');
-    const accessToken = Cookies.get('access_token');
+   
 
     if (
       error.response?.status === 401 &&
       !originalRequest._retry &&
-      refreshToken &&
-      accessToken
+      refreshToken 
     ) {
       originalRequest._retry = true;
 
       try {
         console.log('Attempting token refresh with:', refreshToken);
         
-        const response = await axios.put(
-          `${API_BASE_URL}/autenticacao/refresh`,
-          null,
-          {
-            headers: { Authorization: `Bearer ${refreshToken}`, Accept: 'application/json' },
-            
-          }
-        );
+        const response = await axios({
+          method: 'PUT',
+          url: `${API_BASE_URL}/autenticacao/refresh`,
+          headers: {
+            Authorization: `Bearer ${refreshToken}`,
+            Accept: 'application/json',
+          },
+          data: undefined, 
+        });
         
         console.log('Refresh successful:', response.data);
 
@@ -80,6 +81,11 @@ apiClient.interceptors.response.use(
         redirectToLogin();
         return Promise.reject(err);
       }
+    }
+
+    
+    if (error.response?.status === 401) {
+      redirectToLogin();
     }
 
     return Promise.reject(error);

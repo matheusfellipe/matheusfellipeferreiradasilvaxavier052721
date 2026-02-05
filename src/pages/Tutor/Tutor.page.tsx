@@ -19,25 +19,26 @@ const TutorPage = () => {
 
   const handleSubmit = async (data: TutorFormData) => {
     try {
-      // Remove mask from CPF (convert "000.000.000-00" to number)
+     
       const cpfNumber = Number(data.cpf.replace(/\D/g, ''));
       const tutorData = { ...data, cpf: cpfNumber };
       
       if (isEditMode && id) {
         await updateTutorMutation.mutateAsync({ id, data: tutorData });
+        navigate(-1);
       } else {
-        // Create tutor first
+        
         const newTutor = await createTutorMutation.mutateAsync(tutorData);
         
-        // Upload photo if one was selected
+       
         if (pendingPhoto && newTutor.id) {
           await uploadPhotoMutation.mutateAsync({ 
             tutorId: String(newTutor.id), 
             file: pendingPhoto 
           });
         }
+        navigate('/tutores');
       }
-      navigate(-1);
     } catch (error) {
       console.error('Error submitting form:', error);
     }
@@ -47,7 +48,7 @@ const TutorPage = () => {
     if (isEditMode && id) {
       await uploadPhotoMutation.mutateAsync({ tutorId: id, file });
     } else {
-      // In create mode, store the file to upload after tutor creation
+      
       setPendingPhoto(file);
     }
   };

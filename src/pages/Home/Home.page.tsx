@@ -1,7 +1,6 @@
 import HeroContent from "./section/HeroContent";
 import HeroImages from "./section/HeroImages";
 import PetsSection from "./section/PetsSection";
-import Footer from "@/shared/layout/Footer";
 
 const HomePage = () => {
   return (
@@ -14,7 +13,6 @@ const HomePage = () => {
       </section>
       
       <PetsSection />
-      <Footer />
     </div>
   )
 }

@@ -8,9 +8,12 @@ import { showNotification } from '@mantine/notifications';
 type HeaderNavProps = {
   opened: boolean;
   toggle: () => void;
+  onPetsClick?: () => void;
+  onNovoTutorClick?: () => void;
+  onTutoresClick?: () => void;
 };
 
-const HeaderNav = ({ opened, toggle }: HeaderNavProps) => {
+const HeaderNav = ({ opened, toggle, onPetsClick, onNovoTutorClick, onTutoresClick }: HeaderNavProps) => {
   const navigate = useNavigate();
   const location = useLocation();
   const authService = new AuthService();
@@ -26,19 +29,39 @@ const HeaderNav = ({ opened, toggle }: HeaderNavProps) => {
   };
 
   const handlePetsClick = () => {
-    if (location.pathname === '/home') {
-      const petsSection = document.getElementById('pets-section');
-      if (petsSection) {
-        petsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
+    if (onPetsClick) {
+      onPetsClick();
     } else {
-      navigate('/home');
-      setTimeout(() => {
+      if (location.pathname === '/home') {
         const petsSection = document.getElementById('pets-section');
         if (petsSection) {
           petsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
-      }, 100);
+      } else {
+        navigate('/home');
+        setTimeout(() => {
+          const petsSection = document.getElementById('pets-section');
+          if (petsSection) {
+            petsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        }, 100);
+      }
+    }
+  };
+
+  const handleNovoTutorClick = () => {
+    if (onNovoTutorClick) {
+      onNovoTutorClick();
+    } else {
+      navigate('/tutores/create');
+    }
+  };
+
+  const handleTutoresClick = () => {
+    if (onTutoresClick) {
+      onTutoresClick();
+    } else {
+      navigate('/tutores');
     }
   };
 
@@ -65,11 +88,11 @@ const HeaderNav = ({ opened, toggle }: HeaderNavProps) => {
         <Button variant="subtle" color="dark" size="sm" onClick={handlePetsClick}>
           Pets
         </Button>
-        <Button variant="subtle" color="dark" size="sm" onClick={() => navigate('/tutores/create')}>
+        <Button variant="subtle" color="dark" size="sm" onClick={handleNovoTutorClick}>
           Novo Tutor
         </Button>
-        <Button variant="filled" color="green" size="sm" onClick={() => navigate('/tutores')}>
-          Tutor
+        <Button variant="filled" color="green" size="sm" onClick={handleTutoresClick}>
+          Tutores
         </Button>
       </Group>
 

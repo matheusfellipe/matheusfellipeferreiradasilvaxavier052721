@@ -25,13 +25,13 @@ const loginSchema = z.object({
   };
 
   return (
-    <div className="w-full h-screen flex items-center justify-center bg-[#f7f2ed]">
-      <div className="relative z-10 w-full max-w-md p-8 bg-white rounded-xl shadow-lg backdrop-blur-sm">
+    <div className="w-full h-screen flex items-center justify-center bg-[#f7f2ed] px-4">
+      <div className="relative z-10 w-full max-w-md p-6 md:p-8 bg-white rounded-xl shadow-lg backdrop-blur-sm">
         
        
 
         {/* Title */}
-        <h2 className="text-2xl font-bold text-center mb-1">Seja bem-vindo</h2>
+        <h2 className="text-xl md:text-2xl font-bold text-center mb-1">Seja bem-vindo</h2>
         <p className="text-center text-gray-500 text-sm mb-6">
           Faça login na sua conta
         </p>

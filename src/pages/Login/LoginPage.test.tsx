@@ -7,5 +7,7 @@ import { expect, test } from 'vitest';
 test('renders login form', () => {
   renderWithProviders(<LoginPage />);
 
-  expect(screen.getByPlaceholderText(/username/i)).toBeInTheDocument();
+  expect(screen.getByPlaceholderText(/nome de usuário/i)).toBeInTheDocument();
+  expect(screen.getByPlaceholderText(/senha/i)).toBeInTheDocument();
+  expect(screen.getByRole('button', { name: /entrar/i })).toBeInTheDocument();
 });

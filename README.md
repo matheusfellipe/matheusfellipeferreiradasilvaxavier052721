@@ -3,7 +3,7 @@
 Aplicação web construída com **React + Vite**, utilizada para gerenciar **pets e seus respectivos tutores**.  
 Permite listagem, busca, paginação, cadastro, edição, detalhamento de registros e vínculo entre pets e tutores, com autenticação baseada em token.
 
-O projeto foi desenvolvido seguindo boas práticas de **arquitetura em camadas**, componentização e testes unitários, conforme solicitado no desafio técnico.
+O projeto foi desenvolvido seguindo boas práticas de **arquitetura em camadas**, componentização e testes unitários.
 
 ---
 
@@ -92,3 +92,7 @@ docker compose up --build -d
 Após subir os containers, abra seu navegador e clique no link abaixo:
 
 [Open Meet Tutors](http://localhost:3000)
+
+### 5. Acesso
+Username: admin
+Senha: admin

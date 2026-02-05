@@ -2,7 +2,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { PetForm } from '@/app/pets/components/PetForm';
 import { Card, Title, Text, Loader, Alert, Container } from '@mantine/core';
 import type { PetFormData } from '@/app/pets/types';
-import { usePet, useCreatePet, useUpdatePet } from '@/app/pets/usePets';
+import { usePet, useCreatePet, useUpdatePet, useUploadPetPhoto, useDeletePetPhoto } from '@/app/pets/usePets';
 
 const PetPage = () => {
   const { id } = useParams();
@@ -12,6 +12,8 @@ const PetPage = () => {
   const { data: pet, isLoading, error } = usePet(id);
   const createPetMutation = useCreatePet();
   const updatePetMutation = useUpdatePet();
+  const uploadPhotoMutation = useUploadPetPhoto();
+  const deletePhotoMutation = useDeletePetPhoto();
 
   const handleSubmit = async (data: PetFormData) => {
     try {
@@ -23,6 +25,18 @@ const PetPage = () => {
       navigate(-1);
     } catch (error) {
       console.error('Error submitting form:', error);
+    }
+  };
+
+  const handlePhotoUpload = async (file: File) => {
+    if (id) {
+      await uploadPhotoMutation.mutateAsync({ petId: id, file });
+    }
+  };
+
+  const handlePhotoDelete = async (fotoId: number) => {
+    if (id) {
+      await deletePhotoMutation.mutateAsync({ petId: id, fotoId });
     }
   };
 
@@ -72,6 +86,9 @@ const PetPage = () => {
               onSubmit={handleSubmit}
               onCancel={handleCancel}
               isLoading={createPetMutation.isPending || updatePetMutation.isPending}
+              onPhotoUpload={handlePhotoUpload}
+              onPhotoDelete={handlePhotoDelete}
+              isUploadingPhoto={uploadPhotoMutation.isPending || deletePhotoMutation.isPending}
             />
           </div>
         </Card>

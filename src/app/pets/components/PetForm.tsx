@@ -1,7 +1,9 @@
-import { Button, TextInput, NumberInput } from '@mantine/core';
+import { Button, TextInput, NumberInput, FileInput, Image, ActionIcon, Text } from '@mantine/core';
+import { IconUpload, IconTrash } from '@tabler/icons-react';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
+import { useState } from 'react';
 import type { Pet } from '../types';
 
 const petFormSchema = z.object({
@@ -18,9 +20,14 @@ interface PetFormProps {
   onCancel?: () => void;
   isLoading?: boolean;
   mode?: 'create' | 'edit';
+  onPhotoUpload?: (file: File) => void | Promise<void>;
+  onPhotoDelete?: (fotoId: number) => void | Promise<void>;
+  isUploadingPhoto?: boolean;
 }
 
-export const PetForm = ({ initialData, onSubmit, onCancel, isLoading = false, mode = 'create' }: PetFormProps) => {
+export const PetForm = ({ initialData, onSubmit, onCancel, isLoading = false, mode = 'create', onPhotoUpload, onPhotoDelete, isUploadingPhoto = false }: PetFormProps) => {
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  
   const {
     register,
     handleSubmit,
@@ -35,8 +42,70 @@ export const PetForm = ({ initialData, onSubmit, onCancel, isLoading = false, mo
     },
   });
 
+  const handleFileChange = async (file: File | null) => {
+    if (file && onPhotoUpload) {
+      setSelectedFile(file);
+      await onPhotoUpload(file);
+      setSelectedFile(null);
+    }
+  };
+
+  const handleDeletePhoto = async () => {
+    if (initialData?.foto?.id && onPhotoDelete) {
+      await onPhotoDelete(initialData.foto.id);
+    }
+  };
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+      {/* Photo Section */}
+      {mode === 'edit' && (
+        <div className="space-y-4">
+          <Text size="sm" fw={500}>Foto do Pet</Text>
+          
+          {initialData?.foto ? (
+            <div className="space-y-4">
+              <div className="relative inline-block w-[180px]">
+                <Image
+                  src={initialData.foto.url}
+                  alt={initialData.nome || 'Pet'}
+                  h={120}
+                  w={180}
+                  fit="cover"
+                  radius="md"
+                  className="bg-gray-50"
+                />
+                <ActionIcon
+                  color="red"
+                  variant="filled"
+                  size="lg"
+                  radius="xl"
+                  className="absolute top-2 right-2"
+                  onClick={handleDeletePhoto}
+                  loading={isUploadingPhoto}
+                >
+                  <IconTrash size={18} />
+                </ActionIcon>
+              </div>
+              <Text size="xs" c="dimmed">Clique no ícone da lixeira para remover a foto atual</Text>
+            </div>
+          ) : (
+            <div className="space-y-2">
+              <FileInput
+                placeholder="Selecione uma imagem"
+                leftSection={<IconUpload size={18} />}
+                accept="image/*"
+                value={selectedFile}
+                onChange={handleFileChange}
+                disabled={isUploadingPhoto}
+                size="md"
+              />
+              <Text size="xs" c="dimmed">Formatos aceitos: JPG, PNG, GIF</Text>
+            </div>
+          )}
+        </div>
+      )}
+
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <TextInput
           label="Nome do Pet"

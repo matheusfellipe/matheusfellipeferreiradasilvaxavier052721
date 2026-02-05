@@ -20,11 +20,12 @@ type PetFormData = z.infer<typeof petFormSchema>;
 interface PetFormProps {
   initialData?: Partial<Pet>;
   onSubmit: (data: PetFormData) => void | Promise<void>;
+  onCancel?: () => void;
   isLoading?: boolean;
   mode?: 'create' | 'edit';
 }
 
-export const PetForm = ({ initialData, onSubmit, isLoading = false, mode = 'create' }: PetFormProps) => {
+export const PetForm = ({ initialData, onSubmit, onCancel, isLoading = false, mode = 'create' }: PetFormProps) => {
   const {
     register,
     handleSubmit,
@@ -155,6 +156,7 @@ export const PetForm = ({ initialData, onSubmit, isLoading = false, mode = 'crea
           color="gray"
           size="md"
           disabled={isLoading}
+          onClick={onCancel}
           className="flex-1 md:flex-none md:min-w-[200px]"
         >
           Cancelar

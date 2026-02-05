@@ -25,6 +25,10 @@ const PetPage = () => {
    
   };
 
+  const handleCancel = () => {
+    navigate('/home');
+  };
+
   return (
     <div className="w-full min-h-screen bg-background py-8">
       <div className="mx-auto max-w-4xl px-4 sm:px-6">
@@ -44,7 +48,7 @@ const PetPage = () => {
             <PetForm
               mode={isEditMode ? 'edit' : 'create'}
               onSubmit={handleSubmit}
-            
+              onCancel={handleCancel}
             />
           </div>
         </Card>

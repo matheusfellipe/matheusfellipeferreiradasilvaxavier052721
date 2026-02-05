@@ -11,5 +11,13 @@ export interface Pet {
 }
 
 export interface PetFormData{
-    nome: string
+  name: string;
+  species: string;
+  breed?: string;
+  age: number;
+  description?: string;
+  tutorName?: string;
+  location?: string;
+  imageUrl?: string;
+
 }

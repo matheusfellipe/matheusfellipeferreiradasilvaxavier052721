@@ -1,13 +1,14 @@
 import { Input, Button } from '@mantine/core';
 import { IconSearch, IconPlus } from '@tabler/icons-react';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const FilterSection = () => {
   const [searchTerm, setSearchTerm] = useState('');
+  const navigate = useNavigate();
 
   const handleRegisterPet = () => {
-    
-    console.log('Register new pet');
+    navigate('/pets/create');
   };
 
   return (

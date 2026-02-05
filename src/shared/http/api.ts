@@ -53,6 +53,7 @@ apiClient.interceptors.response.use(
       originalRequest._retry = true;
 
       try {
+        console.log('Attempting token refresh with:', refreshToken);
         
         const response = await axios.put(
           `${API_BASE_URL}/autenticacao/refresh`,
@@ -62,6 +63,8 @@ apiClient.interceptors.response.use(
             
           }
         );
+        
+        console.log('Refresh successful:', response.data);
 
         const { access_token: newAccessToken, refresh_token: newRefreshToken, expires_in } = response.data;
 
@@ -73,6 +76,7 @@ apiClient.interceptors.response.use(
         originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
         return apiClient(originalRequest);
       } catch (err) {
+        console.error('Token refresh failed:', err);
         redirectToLogin();
         return Promise.reject(err);
       }

@@ -8,6 +8,7 @@ import { MantineProvider } from '@mantine/core'
 import { Notifications } from '@mantine/notifications';
 import App from './App'
 import { petTheme } from './shared/theme';
+import { ModalsProvider } from '@mantine/modals'
 
 
 
@@ -16,7 +17,10 @@ createRoot(document.getElementById('root')!).render(
   
     <MantineProvider theme={petTheme}>
        <Notifications />
-       <App />
+       <ModalsProvider>
+
+            <App />
+       </ModalsProvider>
     </MantineProvider>
 
 )

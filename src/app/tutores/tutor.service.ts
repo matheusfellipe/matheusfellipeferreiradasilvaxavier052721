@@ -65,6 +65,14 @@ export class TutorService {
   async deleteTutorPhoto(tutorId: string, fotoId: number): Promise<void> {
     await apiClient.delete(`${this.basePath}/${tutorId}/fotos/${fotoId}`);
   }
+
+  async assignPetToTutor(tutorId: string, petId: number): Promise<void> {
+    await apiClient.post(`${this.basePath}/${tutorId}/pets/${petId}`);
+  }
+
+  async removePetFromTutor(tutorId: string, petId: number): Promise<void> {
+    await apiClient.delete(`${this.basePath}/${tutorId}/pets/${petId}`);
+  }
 }
 
 export const tutorService = new TutorService();

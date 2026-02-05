@@ -139,3 +139,53 @@ export const useDeleteTutorPhoto = () => {
     },
   });
 };
+
+export const useAssignPetToTutor = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ tutorId, petId }: { tutorId: string; petId: number }) =>
+      tutorService.assignPetToTutor(tutorId, petId),
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({ queryKey: [TUTORES_QUERY_KEY, variables.tutorId] });
+      queryClient.invalidateQueries({ queryKey: ['pets'] });
+      showNotification({
+        title: 'Sucesso',
+        message: 'Pet atribuído ao tutor com sucesso!',
+        color: 'green',
+      });
+    },
+    onError: () => {
+      showNotification({
+        title: 'Erro',
+        message: 'Falha ao atribuir o pet. Tente novamente.',
+        color: 'red',
+      });
+    },
+  });
+};
+
+export const useRemovePetFromTutor = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ tutorId, petId }: { tutorId: string; petId: number }) =>
+      tutorService.removePetFromTutor(tutorId, petId),
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({ queryKey: [TUTORES_QUERY_KEY, variables.tutorId] });
+      queryClient.invalidateQueries({ queryKey: ['pets'] });
+      showNotification({
+        title: 'Sucesso',
+        message: 'Pet removido do tutor com sucesso!',
+        color: 'green',
+      });
+    },
+    onError: () => {
+      showNotification({
+        title: 'Erro',
+        message: 'Falha ao remover o pet. Tente novamente.',
+        color: 'red',
+      });
+    },
+  });
+};

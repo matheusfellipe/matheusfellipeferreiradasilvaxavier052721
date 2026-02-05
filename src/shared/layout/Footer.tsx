@@ -7,7 +7,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
           <div className="space-y-3">
             <Text size="lg" fw={600} c="white">
-              Test Pet
+              Meet Pet
             </Text>
             <Text size="sm" c="gray.4">
               Conectando pets com tutores especializados para cuidados e treinamento.
@@ -20,7 +20,7 @@ const Footer = () => {
         <div className="border-t border-gray-700 pt-6">
           <Group justify="space-between" className="flex-col md:flex-row gap-4">
             <Text size="sm" c="gray.5">
-              © {new Date().getFullYear()} Test Pet. Todos os direitos reservados.
+              © {new Date().getFullYear()} Meet Pet. Todos os direitos reservados.
             </Text>
             <Group gap="lg">
               <Anchor href="#" size="sm" c="gray.4" className="hover:text-white">

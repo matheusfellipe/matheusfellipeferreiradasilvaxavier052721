@@ -1,5 +1,7 @@
 import { PetGrid } from '@/app/pets/components';
 import type { Pet } from '@/app/pets/types';
+import { Pagination } from '@mantine/core';
+import { useState } from 'react';
 
 // Mock data - replace with API call later
 const mockPets: Pet[] = [
@@ -114,6 +116,8 @@ const mockPets: Pet[] = [
 ];
 
 const PetsSection = () => {
+  const [activePage, setActivePage] = useState(1);
+
   const handlePetClick = (pet: Pet) => {
     console.log('Pet clicked:', pet);
     // Navigate to pet details or open modal
@@ -121,8 +125,18 @@ const PetsSection = () => {
 
   return (
     <section className="w-full bg-background py-8 md:py-12">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 space-y-8">
         <PetGrid pets={mockPets} onPetClick={handlePetClick} />
+        
+        <div className="flex justify-center">
+          <Pagination 
+            total={10} 
+            value={activePage} 
+            onChange={setActivePage}
+            size="md"
+            color="green"
+          />
+        </div>
       </div>
     </section>
   );

@@ -10,7 +10,6 @@ const AppLayout = () => {
         <AppShell
         header={{ height: 60 }}
         navbar={{ width: 300, breakpoint: 'sm', collapsed: { desktop: true, mobile: !opened } }}
-        padding="md"
         >
         <AppShell.Header>
            <HeaderNav opened={opened} toggle={toggle} />

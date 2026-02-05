@@ -9,6 +9,9 @@ export default {
         background: '#F6F1EB',
         borderColor: '#E0D6CA',
       },
+      fontFamily: {
+        sans: ['Inter', 'system-ui', 'sans-serif'],
+      },
     },
   },
   plugins: [],

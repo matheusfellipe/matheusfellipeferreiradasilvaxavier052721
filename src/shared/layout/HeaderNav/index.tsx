@@ -25,7 +25,7 @@ const HeaderNav = ({ opened, toggle }: HeaderNavProps) => {
   };
 
   return (
-    <div className='w-full border-b border-borderColor px-4 py-3 flex items-center justify-between'>
+    <div className='w-full px-4 py-3 flex items-center justify-between'>
       <div className="flex items-center gap-3 ml-8">
         <Burger
           opened={opened}

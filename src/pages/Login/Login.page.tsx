@@ -9,8 +9,8 @@ import { useAuth } from "@/app/auth/useAuth";
 
 
 const loginSchema = z.object({
-  username: z.string().min(1, "Username is required"),
-  password: z.string().min(4, "Password must be at least 4 characters"),
+  username: z.string().min(1, "Nome de usuário é obrigatório"),
+  password: z.string().min(4, "Senha deve conter no mínimo 4 caracteres"),
 });
 
  const LoginPage = () => {
@@ -31,45 +31,45 @@ const loginSchema = z.object({
        
 
         {/* Title */}
-        <h2 className="text-2xl font-bold text-center mb-1">Welcome Back</h2>
+        <h2 className="text-2xl font-bold text-center mb-1">Seja bem-vindo</h2>
         <p className="text-center text-gray-500 text-sm mb-6">
-          Sign in with your username and password
+          Faça login na sua conta
         </p>
 
         {/* Form */}
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
-          <Input
-            placeholder="Username"
-            {...register("username")}
-            error={errors.username?.message}
-            size="md"
-            classNames={{ input: "bg-gray-100 border border-gray-300 focus:border-green-700 focus:bg-white" }}
-          />
-          <PasswordInput
-            placeholder="Password"
-            {...register("password")}
-            error={errors.password?.message}
-            size="md"
-            classNames={{ input: "bg-gray-100 border border-gray-300 focus:border-green-700 focus:bg-white" }}
-          />
+          <div>
+            <Input
+              placeholder="Nome de usuário"
+              {...register("username")}
+              error={errors.username?.message}
+              size="md"
+              w="100%"
+            />
+          </div>
+          <div>
+            <PasswordInput
+              placeholder="Senha"
+              {...register("password")}
+              error={errors.password?.message}
+              size="md"
+              w="100%"
+            />
+          </div>
 
           <Button
             type="submit"
             fullWidth
             disabled={isLoggingIn}
-            className="bg-green-700 hover:bg-green-800"
+            size="md"
+            color="green"
           >
-            {isLoggingIn ? "Logging in..." : "Sign In"}
+            {isLoggingIn ? "Entrando..." : "Entrar"}
           </Button>
         </form>
 
-        {/* Footer */}
-        <p className="text-center text-gray-500 text-sm mt-6">
-          Don’t have an account?{" "}
-          <a href="/signup" className="text-green-700 font-medium hover:underline">
-            Sign Up
-          </a>
-        </p>
+      
+      
       </div>
     </div>
   );

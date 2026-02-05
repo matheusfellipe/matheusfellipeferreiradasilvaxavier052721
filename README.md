@@ -54,19 +54,20 @@ React Query atua como a principal fonte de verdade para dados remotos, cumprindo
 ### Roteamento e Estado
 - **React Router DOM** – roteamento e lazy loading de módulos
 - **React Query (TanStack Query)** – gerenciamento de estado do servidor
-- **Zustand** – estado global do cliente (sessão, dados compartilhados)
+
 
 ### UI e Formulários
 - **Tailwind CSS** – estilização e layout responsivo
 - **Mantine** – componentes de formulário e modais (uso pontual)
 - **React Hook Form** – gerenciamento e validação de formulários
+- **React Mask** - máscaras no input do formulário
 
 ### Qualidade e Testes
 - **Vitest** – testes unitários
 - **ESLint** – linting
 - **Prettier** – formatação de código
 - **Husky** – hooks de pré-commit
-- **React Test Library**  
+- **React Test Library**  - testes de componentes
 
 ---
 

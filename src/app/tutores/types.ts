@@ -14,3 +14,11 @@ export interface Tutor {
   cpf: number;
   foto?: TutorPhoto;
 }
+
+export interface TutorFormData {
+  nome: string;
+  email: string;
+  telefone: string;
+  endereco: string;
+  cpf: number;
+}

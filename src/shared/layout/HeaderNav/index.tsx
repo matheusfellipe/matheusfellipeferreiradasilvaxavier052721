@@ -54,11 +54,11 @@ const HeaderNav = ({ opened, toggle }: HeaderNavProps) => {
         <Button variant="subtle" color="dark" size="sm" onClick={scrollToPets}>
           Pets
         </Button>
-        <Button variant="subtle" color="dark" size="sm">
-          Quero ser Tutor
+        <Button variant="subtle" color="dark" size="sm" onClick={() => navigate('/tutores/create')}>
+          Novo Tutor
         </Button>
-        <Button variant="filled" color="green" size="sm">
-          Tutores
+        <Button variant="filled" color="green" size="sm" onClick={() => navigate('/tutores')}>
+          Tutor
         </Button>
       </Group>
 

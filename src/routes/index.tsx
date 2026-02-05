@@ -9,6 +9,7 @@ import { LoadingFallback } from './LoadingFallback';
 // Lazy loaded components
 const PetPage = lazy(() => import('@/pages/Pet/Pet.page'));
 const PetDetailPage = lazy(() => import('@/pages/Pet/PetDetail.page'));
+const TutorPage = lazy(() => import('@/pages/Tutor/Tutor.page'));
 
 const PATH_HOME = '/home';
 const PATH_LOGIN = '/login';
@@ -17,6 +18,13 @@ const PATH_PET = {
   create: '/pets/create',
   details: '/pets/:id',
   edit: '/pets/edit/:id',
+}
+
+const PATH_TUTOR = {
+  root: '/tutores',
+  create: '/tutores/create',
+  details: '/tutores/:id',
+  edit: '/tutores/edit/:id',
 }
 
 export const routes = (
@@ -49,6 +57,26 @@ export const routes = (
           element={
             <Suspense fallback={<LoadingFallback />}>
               <PetPage />
+            </Suspense>
+          } 
+        />
+      </Route>
+
+      <Route path={PATH_TUTOR.root}>
+        <Route index element={<Navigate to={PATH_HOME} replace />} />
+        <Route 
+          path="create" 
+          element={
+            <Suspense fallback={<LoadingFallback />}>
+              <TutorPage />
+            </Suspense>
+          } 
+        />
+        <Route 
+          path=":id/edit" 
+          element={
+            <Suspense fallback={<LoadingFallback />}>
+              <TutorPage />
             </Suspense>
           } 
         />

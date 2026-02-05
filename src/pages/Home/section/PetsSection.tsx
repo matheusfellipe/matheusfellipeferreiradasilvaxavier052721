@@ -11,8 +11,7 @@ const PetsSection = () => {
   const navigate = useNavigate();
 
   const handlePetClick = (pet: Pet) => {
-    console.log('Pet clicked:', pet);
-    // Navigate to pet details or open modal
+    navigate(`/pets/${pet.id}`);
   };
 
   const handleEdit = (pet: Pet) => {

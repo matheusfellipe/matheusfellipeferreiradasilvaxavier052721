@@ -9,13 +9,14 @@ interface PetCardProps {
   onViewDetails?: (pet: Pet) => void;
 }
 
-export const PetCard = ({ pet, onEdit, onViewDetails }: PetCardProps) => {
+export const PetCard = ({ pet, onClick, onEdit, onViewDetails }: PetCardProps) => {
   return (
     <Card
       shadow="sm"
       padding="lg"
       radius="md"
-      className="hover:shadow-lg transition-shadow h-full flex flex-col"
+      className="hover:shadow-lg transition-shadow h-full flex flex-col cursor-pointer"
+      onClick={() => onClick?.(pet)}
     >
       <Card.Section className="h-48 overflow-hidden bg-gray-50">
         <Image

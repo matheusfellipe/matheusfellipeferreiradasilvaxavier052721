@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useDebouncedValue } from '@mantine/hooks';
 import { usePets } from './usePets';
 
 
@@ -8,12 +9,15 @@ export const usePetsFacade = () => {
   const [racaSearch, setRacaSearch] = useState('');
   const pageSize = 10;
 
+  // Debounce search terms to avoid excessive API calls
+  const [debouncedNome] = useDebouncedValue(nomeSearch, 500);
+  const [debouncedRaca] = useDebouncedValue(racaSearch, 500);
 
   const { data, isLoading, error, refetch } = usePets({
     page,
     size: pageSize,
-    ...(nomeSearch && { nome: nomeSearch }),
-    ...(racaSearch && { raca: racaSearch }),
+    ...(debouncedNome && { nome: debouncedNome }),
+    ...(debouncedRaca && { raca: debouncedRaca }),
   });
 
   

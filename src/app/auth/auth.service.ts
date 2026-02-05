@@ -16,8 +16,12 @@ export default class AuthService  {
       }
 
 
-      async refreshLogin(refresh_token : string): Promise<AuthResponse>{
-        const response = await  apiClient.put(`/autenticacao/refresh`, {refreshToken:refresh_token});
+      async refreshLogin(refresh_token: string): Promise<AuthResponse>{
+        const response = await apiClient.put(`/autenticacao/refresh`, null, {
+          headers: {
+            'Authorization': refresh_token
+          }
+        });
   
         return response.data;
       }

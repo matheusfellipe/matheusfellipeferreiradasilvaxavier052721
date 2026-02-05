@@ -16,7 +16,7 @@ export interface PetListParams {
 }
 
 export class PetService {
-  private basePath = '/pets';
+  private basePath = '/v1/pets';
 
   async listPets(params: PetListParams = {}): Promise<PetListResponse> {
     const { page = 0, size = 10, search } = params;

@@ -1,23 +1,29 @@
-export interface Pet {
-  id: string;
-  name: string;
-  species: string;
-  breed?: string;
-  age: number;
-  imageUrl: string;
-  description?: string;
-  tutorName?: string;
-  location?: string;
+export interface PetPhoto {
+  id: number;
+  nome: string;
+  contentType: string;
+  url: string;
 }
 
-export interface PetFormData{
-  name: string;
-  species: string;
-  breed?: string;
-  age: number;
-  description?: string;
-  tutorName?: string;
-  location?: string;
-  imageUrl?: string;
+export interface Pet {
+  id: number;
+  nome: string;
+  raca: string;
+  idade: number;
+  foto?: PetPhoto;
+  especie?: string;
+  descricao?: string;
+  tutor?: string;
+  localizacao?: string;
+}
 
+export interface PetFormData {
+  nome: string;
+  especie: string;
+  raca?: string;
+  idade: number;
+  descricao?: string;
+  tutor?: string;
+  localizacao?: string;
+  foto?: File;
 }

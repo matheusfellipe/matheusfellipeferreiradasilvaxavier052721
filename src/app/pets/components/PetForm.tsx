@@ -5,14 +5,13 @@ import { z } from 'zod';
 import type { Pet } from '../types';
 
 const petFormSchema = z.object({
-  name: z.string().min(1, 'Nome é obrigatório'),
-  species: z.string().min(1, 'Espécie é obrigatória'),
-  breed: z.string().optional(),
-  age: z.number().min(0, 'Idade deve ser maior ou igual a 0').max(50, 'Idade inválida'),
-  description: z.string().optional(),
-  tutorName: z.string().optional(),
-  location: z.string().optional(),
-  imageUrl: z.string().optional(),
+  nome: z.string().min(1, 'Nome é obrigatório'),
+  especie: z.string().min(1, 'Espécie é obrigatória'),
+  raca: z.string().optional(),
+  idade: z.number().min(0, 'Idade deve ser maior ou igual a 0').max(50, 'Idade inválida'),
+  descricao: z.string().optional(),
+  tutor: z.string().optional(),
+  localizacao: z.string().optional(),
 });
 
 type PetFormData = z.infer<typeof petFormSchema>;
@@ -34,14 +33,13 @@ export const PetForm = ({ initialData, onSubmit, onCancel, isLoading = false, mo
   } = useForm<PetFormData>({
     resolver: zodResolver(petFormSchema),
     defaultValues: {
-      name: initialData?.name || '',
-      species: initialData?.species || '',
-      breed: initialData?.breed || '',
-      age: initialData?.age || 0,
-      description: initialData?.description || '',
-      tutorName: initialData?.tutorName || '',
-      location: initialData?.location || '',
-      imageUrl: initialData?.imageUrl || '',
+      nome: initialData?.nome || '',
+      especie: initialData?.especie || '',
+      raca: initialData?.raca || '',
+      idade: initialData?.idade || 0,
+      descricao: initialData?.descricao || '',
+      tutor: initialData?.tutor || '',
+      localizacao: initialData?.localizacao || '',
     },
   });
 
@@ -59,14 +57,14 @@ export const PetForm = ({ initialData, onSubmit, onCancel, isLoading = false, mo
         <TextInput
           label="Nome do Pet"
           placeholder="Ex: Rex, Luna, Thor..."
-          {...register('name')}
-          error={errors.name?.message}
+          {...register('nome')}
+          error={errors.nome?.message}
           required
           size="md"
         />
 
         <Controller
-          name="species"
+          name="especie"
           control={control}
           render={({ field }) => (
             <Select
@@ -74,7 +72,7 @@ export const PetForm = ({ initialData, onSubmit, onCancel, isLoading = false, mo
               placeholder="Selecione a espécie"
               data={speciesOptions}
               {...field}
-              error={errors.species?.message}
+              error={errors.especie?.message}
               required
               size="md"
             />
@@ -84,13 +82,13 @@ export const PetForm = ({ initialData, onSubmit, onCancel, isLoading = false, mo
         <TextInput
           label="Raça"
           placeholder="Ex: Golden Retriever, Siamês..."
-          {...register('breed')}
-          error={errors.breed?.message}
+          {...register('raca')}
+          error={errors.raca?.message}
           size="md"
         />
 
         <Controller
-          name="age"
+          name="idade"
           control={control}
           render={({ field }) => (
             <NumberInput
@@ -99,7 +97,7 @@ export const PetForm = ({ initialData, onSubmit, onCancel, isLoading = false, mo
               min={0}
               max={50}
               {...field}
-              error={errors.age?.message}
+              error={errors.idade?.message}
               required
               size="md"
             />
@@ -109,16 +107,16 @@ export const PetForm = ({ initialData, onSubmit, onCancel, isLoading = false, mo
         <TextInput
           label="Nome do Tutor"
           placeholder="Nome do tutor responsável"
-          {...register('tutorName')}
-          error={errors.tutorName?.message}
+          {...register('tutor')}
+          error={errors.tutor?.message}
           size="md"
         />
 
         <TextInput
           label="Localização"
           placeholder="Ex: São Paulo, SP"
-          {...register('location')}
-          error={errors.location?.message}
+          {...register('localizacao')}
+          error={errors.localizacao?.message}
           size="md"
         />
       </div>
@@ -126,17 +124,9 @@ export const PetForm = ({ initialData, onSubmit, onCancel, isLoading = false, mo
       <Textarea
         label="Descrição"
         placeholder="Descreva o pet, suas características e personalidade..."
-        {...register('description')}
-        error={errors.description?.message}
+        {...register('descricao')}
+        error={errors.descricao?.message}
         minRows={4}
-        size="md"
-      />
-
-      <TextInput
-        label="URL da Imagem"
-        placeholder="https://exemplo.com/imagem.jpg"
-        {...register('imageUrl')}
-        error={errors.imageUrl?.message}
         size="md"
       />
 

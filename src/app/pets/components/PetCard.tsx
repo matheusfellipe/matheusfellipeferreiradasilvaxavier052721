@@ -18,9 +18,9 @@ export const PetCard = ({ pet, onClick }: PetCardProps) => {
     >
       <Card.Section>
         <Image
-          src={pet.imageUrl}
+          src={pet.foto?.url}
           height={200}
-          alt={pet.name}
+          alt={pet.nome}
           className="object-cover"
         />
       </Card.Section>
@@ -29,35 +29,35 @@ export const PetCard = ({ pet, onClick }: PetCardProps) => {
         <Group justify="space-between" align="flex-start">
           <div>
             <Text fw={600} size="lg">
-              {pet.name}
+              {pet.nome}
             </Text>
             <Text size="sm" c="dimmed">
-              {pet.breed || pet.species}
+              {pet.raca || pet.especie}
             </Text>
           </div>
           <Badge color="green" variant="light">
-            {pet.age} {pet.age === 1 ? 'ano' : 'anos'}
+            {pet.idade} {pet.idade === 1 ? 'ano' : 'anos'}
           </Badge>
         </Group>
 
-        {pet.description && (
+        {pet.descricao && (
           <Text size="sm" c="dimmed" lineClamp={2}>
-            {pet.description}
+            {pet.descricao}
           </Text>
         )}
 
         <Group gap="xs">
-          {pet.location && (
+          {pet.localizacao && (
             <Group gap={4}>
               <IconMapPin size={14} className="text-gray-500" />
               <Text size="xs" c="dimmed">
-                {pet.location}
+                {pet.localizacao}
               </Text>
             </Group>
           )}
-          {pet.tutorName && (
+          {pet.tutor && (
             <Text size="xs" c="dimmed">
-              • Tutor: {pet.tutorName}
+              • Tutor: {pet.tutor}
             </Text>
           )}
         </Group>

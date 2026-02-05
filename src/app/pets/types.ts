@@ -8,7 +8,7 @@ export interface PetPhoto {
 export interface Pet {
   id: number;
   nome: string;
-  raca: string;
+  raca?: string;
   idade: number;
   foto?: PetPhoto;
   especie?: string;

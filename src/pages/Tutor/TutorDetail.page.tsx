@@ -215,7 +215,7 @@ const TutorDetailPage = () => {
                         src={pet.foto?.url}
                         h="100%"
                         w="100%"
-                        fit="cover"
+                        fit="contain"
                         alt={pet.nome}
                       />
                     </Card.Section>
@@ -265,7 +265,7 @@ const TutorDetailPage = () => {
                       src={pet.foto?.url}
                       h="100%"
                       w="100%"
-                      fit="cover"
+                      fit="contain"
                       alt={pet.nome}
                     />
                   </Card.Section>

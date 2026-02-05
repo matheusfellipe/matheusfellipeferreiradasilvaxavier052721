@@ -73,15 +73,14 @@ export const PetForm = ({ initialData, onSubmit, onCancel, isLoading = false, mo
         
         {mode === 'edit' && initialData?.foto ? (
             <div className="space-y-4">
-              <div className="relative inline-block w-[180px]">
+              <div className="relative w-[180px] h-[120px] bg-gray-50 rounded-md overflow-hidden">
                 <Image
                   src={initialData.foto.url}
                   alt={initialData.nome || 'Pet'}
-                  h={120}
-                  w={180}
-                  fit="cover"
+                  h="100%"
+                  w="100%"
+                  fit="contain"
                   radius="md"
-                  className="bg-gray-50"
                 />
                 <ActionIcon
                   color="red"
@@ -99,15 +98,14 @@ export const PetForm = ({ initialData, onSubmit, onCancel, isLoading = false, mo
             </div>
           ) : selectedFile ? (
             <div className="space-y-4">
-              <div className="relative inline-block w-[180px]">
+              <div className="relative w-[180px] h-[120px] bg-gray-50 rounded-md overflow-hidden">
                 <Image
                   src={URL.createObjectURL(selectedFile)}
                   alt="Pré-visualização"
-                  h={120}
-                  w={180}
-                  fit="cover"
+                  h="100%"
+                  w="100%"
+                  fit="contain"
                   radius="md"
-                  className="bg-gray-50"
                 />
                 <ActionIcon
                   color="red"

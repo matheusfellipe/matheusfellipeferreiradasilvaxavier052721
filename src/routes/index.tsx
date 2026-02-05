@@ -11,6 +11,7 @@ const PetPage = lazy(() => import('@/pages/Pet/Pet.page'));
 const PetDetailPage = lazy(() => import('@/pages/Pet/PetDetail.page'));
 const TutorPage = lazy(() => import('@/pages/Tutor/Tutor.page'));
 const TutorListPage = lazy(() => import('@/pages/Tutor/TutorList.page'));
+const TutorDetailPage = lazy(() => import('@/pages/Tutor/TutorDetail.page'));
 
 const PATH_HOME = '/home';
 const PATH_LOGIN = '/login';
@@ -77,6 +78,14 @@ export const routes = (
           element={
             <Suspense fallback={<LoadingFallback />}>
               <TutorPage />
+            </Suspense>
+          } 
+        />
+        <Route 
+          path=":id" 
+          element={
+            <Suspense fallback={<LoadingFallback />}>
+              <TutorDetailPage />
             </Suspense>
           } 
         />

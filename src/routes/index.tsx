@@ -1,10 +1,13 @@
+import { lazy, Suspense } from 'react';
 import HomePage from '@/pages/Home/Home.page';
 import LoginPage from '@/pages/Login/Login.page';
-import PetPage from '@/pages/Pet/Pet.page';
 import ResponsiveLayout from '@/shared/layout/AppLayout';
 import { Navigate, Route } from 'react-router-dom';
 import { ProtectedRoute } from './ProtectedRoute';
+import { LoadingFallback } from './LoadingFallback';
 
+// Lazy loaded components
+const PetPage = lazy(() => import('@/pages/Pet/Pet.page'));
 
 const PATH_HOME = '/home';
 const PATH_LOGIN = '/login';
@@ -24,9 +27,23 @@ export const routes = (
       
       <Route path={PATH_PET.root}>
         <Route index element={<Navigate to={PATH_HOME} replace />} />
-        <Route path="create" element={<PetPage />} />
+        <Route 
+          path="create" 
+          element={
+            <Suspense fallback={<LoadingFallback />}>
+              <PetPage />
+            </Suspense>
+          } 
+        />
         <Route path=":id" element={<div>pet details</div>} />
-        <Route path="edit/:id" element={<PetPage />} />
+        <Route 
+          path="edit/:id" 
+          element={
+            <Suspense fallback={<LoadingFallback />}>
+              <PetPage />
+            </Suspense>
+          } 
+        />
       </Route>
     </Route>
 

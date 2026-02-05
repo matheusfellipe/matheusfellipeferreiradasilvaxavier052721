@@ -19,18 +19,10 @@ export const useAuth = () => {
     mutationFn: async ({ username, password }: LoginType) => {
       const response = await authService.login({ username, password });
 
-      if (!response?.access_token) {
-        throw new Error('Invalid access token received from the server.');
-      }
-
       
       Cookies.set('access_token', response.access_token);
       Cookies.set('refresh_token', response.refresh_token);
       Cookies.set('expires_in', response.expires_in.toString());
-
-
-
-     
     },
     onSuccess: () => {
     

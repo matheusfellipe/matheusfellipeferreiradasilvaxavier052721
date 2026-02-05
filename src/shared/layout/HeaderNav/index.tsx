@@ -24,6 +24,13 @@ const HeaderNav = ({ opened, toggle }: HeaderNavProps) => {
     navigate('/login');
   };
 
+  const scrollToPets = () => {
+    const petsSection = document.getElementById('pets-section');
+    if (petsSection) {
+      petsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
   return (
     <div className='w-full px-4 py-3 flex items-center justify-between'>
       <div className="flex items-center gap-3 ml-8">
@@ -44,6 +51,9 @@ const HeaderNav = ({ opened, toggle }: HeaderNavProps) => {
       </div>
 
       <Group gap="md" visibleFrom="sm">
+        <Button variant="subtle" color="dark" size="sm" onClick={scrollToPets}>
+          Pets
+        </Button>
         <Button variant="subtle" color="dark" size="sm">
           Quero ser Tutor
         </Button>

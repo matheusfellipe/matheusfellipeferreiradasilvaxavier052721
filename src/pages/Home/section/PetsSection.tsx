@@ -124,7 +124,7 @@ const PetsSection = () => {
   };
 
   return (
-    <section className="w-full bg-background py-8 md:py-12">
+    <section id="pets-section" className="w-full bg-background py-8 md:py-12">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 space-y-8">
         <PetGrid pets={mockPets} onPetClick={handlePetClick} />
         

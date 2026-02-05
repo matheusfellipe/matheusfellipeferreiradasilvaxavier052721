@@ -1,20 +1,21 @@
-import { Card, Text, Badge, Group, Image } from '@mantine/core';
-import { IconMapPin } from '@tabler/icons-react';
+import { Card, Text, Badge, Group, Image, Button } from '@mantine/core';
+import { IconMapPin, IconEdit, IconEye } from '@tabler/icons-react';
 import type { Pet } from '../types';
 
 interface PetCardProps {
   pet: Pet;
   onClick?: (pet: Pet) => void;
+  onEdit?: (pet: Pet) => void;
+  onViewDetails?: (pet: Pet) => void;
 }
 
-export const PetCard = ({ pet, onClick }: PetCardProps) => {
+export const PetCard = ({ pet, onEdit, onViewDetails }: PetCardProps) => {
   return (
     <Card
       shadow="sm"
       padding="lg"
       radius="md"
-      className="cursor-pointer hover:shadow-lg transition-shadow h-full flex flex-col"
-      onClick={() => onClick?.(pet)}
+      className="hover:shadow-lg transition-shadow h-full flex flex-col"
     >
       <Card.Section className="h-48 overflow-hidden bg-gray-50">
         <Image
@@ -47,7 +48,9 @@ export const PetCard = ({ pet, onClick }: PetCardProps) => {
           </Text>
         )}
 
-        <Group gap="xs" className="mt-auto pt-2">
+        <div className="flex-1" />
+
+        <Group gap="xs" className="pt-2">
           {pet.localizacao && (
             <Group gap={4}>
               <IconMapPin size={14} className="text-gray-500" />
@@ -61,6 +64,35 @@ export const PetCard = ({ pet, onClick }: PetCardProps) => {
               • Tutor: {pet.tutor}
             </Text>
           )}
+        </Group>
+
+        <Group gap="sm" className="mt-3">
+          <Button
+            variant="light"
+            color="blue"
+            size="sm"
+            leftSection={<IconEye size={16} />}
+            onClick={(e) => {
+              e.stopPropagation();
+              onViewDetails?.(pet);
+            }}
+            className="flex-1"
+          >
+            Detalhes
+          </Button>
+          <Button
+            variant="light"
+            color="green"
+            size="sm"
+            leftSection={<IconEdit size={16} />}
+            onClick={(e) => {
+              e.stopPropagation();
+              onEdit?.(pet);
+            }}
+            className="flex-1"
+          >
+            Editar
+          </Button>
         </Group>
       </div>
     </Card>

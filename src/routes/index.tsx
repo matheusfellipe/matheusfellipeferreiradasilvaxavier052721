@@ -8,6 +8,7 @@ import { LoadingFallback } from './LoadingFallback';
 
 // Lazy loaded components
 const PetPage = lazy(() => import('@/pages/Pet/Pet.page'));
+const PetDetailPage = lazy(() => import('@/pages/Pet/PetDetail.page'));
 
 const PATH_HOME = '/home';
 const PATH_LOGIN = '/login';
@@ -35,9 +36,16 @@ export const routes = (
             </Suspense>
           } 
         />
-        <Route path=":id" element={<div>pet details</div>} />
         <Route 
-          path="edit/:id" 
+          path=":id" 
+          element={
+            <Suspense fallback={<LoadingFallback />}>
+              <PetDetailPage />
+            </Suspense>
+          } 
+        />
+        <Route 
+          path=":id/edit" 
           element={
             <Suspense fallback={<LoadingFallback />}>
               <PetPage />

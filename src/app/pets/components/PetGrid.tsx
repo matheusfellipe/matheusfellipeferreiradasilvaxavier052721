@@ -5,9 +5,11 @@ import { PetCard } from './PetCard';
 interface PetGridProps {
   pets: Pet[];
   onPetClick?: (pet: Pet) => void;
+  onEdit?: (pet: Pet) => void;
+  onViewDetails?: (pet: Pet) => void;
 }
 
-export const PetGrid = ({ pets, onPetClick }: PetGridProps) => {
+export const PetGrid = ({ pets, onPetClick, onEdit, onViewDetails }: PetGridProps) => {
   if (pets.length === 0) {
     return (
       <div className="text-center py-12">
@@ -24,7 +26,13 @@ export const PetGrid = ({ pets, onPetClick }: PetGridProps) => {
       spacing={{ base: 'md', sm: 'lg' }}
     >
       {pets.map((pet) => (
-        <PetCard key={pet.id} pet={pet} onClick={onPetClick} />
+        <PetCard 
+          key={pet.id} 
+          pet={pet} 
+          onClick={onPetClick}
+          onEdit={onEdit}
+          onViewDetails={onViewDetails}
+        />
       ))}
     </SimpleGrid>
   );

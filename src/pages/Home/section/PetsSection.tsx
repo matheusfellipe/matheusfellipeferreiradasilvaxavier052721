@@ -3,14 +3,24 @@ import type { Pet } from '@/app/pets/types';
 import { Pagination, Loader, Alert } from '@mantine/core';
 import { usePetsFacade } from '@/app/pets/usePetsFacade';
 import { IconAlertCircle } from '@tabler/icons-react';
+import { useNavigate } from 'react-router-dom';
 import FilterSection from './FilterSection';
 
 const PetsSection = () => {
   const { pets, isLoading, hasError, currentPage, totalPages, goToPage, searchByNome, searchByRaca, nomeSearch, racaSearch } = usePetsFacade();
+  const navigate = useNavigate();
 
   const handlePetClick = (pet: Pet) => {
     console.log('Pet clicked:', pet);
     // Navigate to pet details or open modal
+  };
+
+  const handleEdit = (pet: Pet) => {
+    navigate(`/pets/${pet.id}/edit`);
+  };
+
+  const handleViewDetails = (pet: Pet) => {
+    navigate(`/pets/${pet.id}`);
   };
 
   return (
@@ -33,7 +43,12 @@ const PetsSection = () => {
           </Alert>
         ) : (
           <>
-            <PetGrid pets={pets} onPetClick={handlePetClick} />
+            <PetGrid 
+              pets={pets} 
+              onPetClick={handlePetClick}
+              onEdit={handleEdit}
+              onViewDetails={handleViewDetails}
+            />
             
             {totalPages > 1 && (
               <div className="flex justify-center">

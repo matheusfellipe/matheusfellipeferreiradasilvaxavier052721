@@ -1,33 +1,54 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { PetForm } from '@/app/pets/components/PetForm';
-import { Card, Title, Text } from '@mantine/core';
-import { showNotification } from '@mantine/notifications';
+import { Card, Title, Text, Loader, Alert, Container } from '@mantine/core';
 import type { PetFormData } from '@/app/pets/types';
+import { usePet, useCreatePet, useUpdatePet } from '@/app/pets/usePets';
 
 const PetPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const isEditMode = Boolean(id);
 
-
+  const { data: pet, isLoading, error } = usePet(id);
+  const createPetMutation = useCreatePet();
+  const updatePetMutation = useUpdatePet();
 
   const handleSubmit = async (data: PetFormData) => {
-  
-        console.log('Form data submitted:', data);
-
-      showNotification({
-        title: 'Sucesso',
-        message: isEditMode ? 'Pet atualizado com sucesso!' : 'Pet cadastrado com sucesso!',
-        color: 'green',
-      });
-
-      navigate('/home');
-   
+    try {
+      if (isEditMode && id) {
+        await updatePetMutation.mutateAsync({ id, data });
+      } else {
+        await createPetMutation.mutateAsync(data);
+      }
+      navigate(-1);
+    } catch (error) {
+      console.error('Error submitting form:', error);
+    }
   };
 
   const handleCancel = () => {
-    navigate('/home');
+    navigate(-1);
   };
+
+  if (isEditMode && isLoading) {
+    return (
+      <Container size="md" className="py-8">
+        <div className="flex justify-center items-center py-12">
+          <Loader size="lg" color="green" />
+        </div>
+      </Container>
+    );
+  }
+
+  if (isEditMode && error) {
+    return (
+      <Container size="md" className="py-8">
+        <Alert color="red" title="Erro">
+          Não foi possível carregar os dados do pet.
+        </Alert>
+      </Container>
+    );
+  }
 
   return (
     <div className="w-full min-h-screen bg-background py-8">
@@ -46,9 +67,11 @@ const PetPage = () => {
             </div>
 
             <PetForm
+              initialData={isEditMode ? pet : undefined}
               mode={isEditMode ? 'edit' : 'create'}
               onSubmit={handleSubmit}
               onCancel={handleCancel}
+              isLoading={createPetMutation.isPending || updatePetMutation.isPending}
             />
           </div>
         </Card>

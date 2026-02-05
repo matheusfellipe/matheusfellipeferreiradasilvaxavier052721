@@ -43,7 +43,7 @@ const PetDetailPage = () => {
            color="black"
             variant="subtle"
             leftSection={<IconArrowLeft size={20} />}
-            onClick={() => navigate('/home')}
+            onClick={() => navigate(-1)}
           >
             Voltar
           </Button>

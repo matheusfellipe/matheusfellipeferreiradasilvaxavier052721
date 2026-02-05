@@ -1,4 +1,4 @@
-import { Button, TextInput, Textarea, NumberInput, Select } from '@mantine/core';
+import { Button, TextInput, NumberInput } from '@mantine/core';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -6,12 +6,8 @@ import type { Pet } from '../types';
 
 const petFormSchema = z.object({
   nome: z.string().min(1, 'Nome é obrigatório'),
-  especie: z.string().min(1, 'Espécie é obrigatória'),
-  raca: z.string().optional(),
+  raca: z.string().min(1, 'Raça é obrigatória'),
   idade: z.number().min(0, 'Idade deve ser maior ou igual a 0').max(50, 'Idade inválida'),
-  descricao: z.string().optional(),
-  tutor: z.string().optional(),
-  localizacao: z.string().optional(),
 });
 
 type PetFormData = z.infer<typeof petFormSchema>;
@@ -34,26 +30,14 @@ export const PetForm = ({ initialData, onSubmit, onCancel, isLoading = false, mo
     resolver: zodResolver(petFormSchema),
     defaultValues: {
       nome: initialData?.nome || '',
-      especie: initialData?.especie || '',
       raca: initialData?.raca || '',
       idade: initialData?.idade || 0,
-      descricao: initialData?.descricao || '',
-      tutor: initialData?.tutor || '',
-      localizacao: initialData?.localizacao || '',
     },
   });
 
-  const speciesOptions = [
-    { value: 'Cachorro', label: 'Cachorro' },
-    { value: 'Gato', label: 'Gato' },
-    { value: 'Pássaro', label: 'Pássaro' },
-    { value: 'Coelho', label: 'Coelho' },
-    { value: 'Outro', label: 'Outro' },
-  ];
-
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <TextInput
           label="Nome do Pet"
           placeholder="Ex: Rex, Luna, Thor..."
@@ -63,27 +47,12 @@ export const PetForm = ({ initialData, onSubmit, onCancel, isLoading = false, mo
           size="md"
         />
 
-        <Controller
-          name="especie"
-          control={control}
-          render={({ field }) => (
-            <Select
-              label="Espécie"
-              placeholder="Selecione a espécie"
-              data={speciesOptions}
-              {...field}
-              error={errors.especie?.message}
-              required
-              size="md"
-            />
-          )}
-        />
-
         <TextInput
           label="Raça"
           placeholder="Ex: Golden Retriever, Siamês..."
           {...register('raca')}
           error={errors.raca?.message}
+          required
           size="md"
         />
 
@@ -103,32 +72,7 @@ export const PetForm = ({ initialData, onSubmit, onCancel, isLoading = false, mo
             />
           )}
         />
-
-        <TextInput
-          label="Nome do Tutor"
-          placeholder="Nome do tutor responsável"
-          {...register('tutor')}
-          error={errors.tutor?.message}
-          size="md"
-        />
-
-        <TextInput
-          label="Localização"
-          placeholder="Ex: São Paulo, SP"
-          {...register('localizacao')}
-          error={errors.localizacao?.message}
-          size="md"
-        />
       </div>
-
-      <Textarea
-        label="Descrição"
-        placeholder="Descreva o pet, suas características e personalidade..."
-        {...register('descricao')}
-        error={errors.descricao?.message}
-        minRows={4}
-        size="md"
-      />
 
       <div className="flex gap-4 pt-4">
         <Button

@@ -22,11 +22,6 @@ export interface Pet {
 
 export interface PetFormData {
   nome: string;
-  especie: string;
-  raca?: string;
+  raca: string;
   idade: number;
-  descricao?: string;
-  tutor?: string;
-  localizacao?: string;
-  foto?: File;
 }

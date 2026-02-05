@@ -1,6 +1,6 @@
 import { Burger, ActionIcon, Tooltip, Button, Group } from '@mantine/core';
 import { IconPaw, IconDoorExit } from '@tabler/icons-react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import AuthService from '@/app/auth/auth.service';
 import { showNotification } from '@mantine/notifications';
 
@@ -12,6 +12,7 @@ type HeaderNavProps = {
 
 const HeaderNav = ({ opened, toggle }: HeaderNavProps) => {
   const navigate = useNavigate();
+  const location = useLocation();
   const authService = new AuthService();
 
   const handleLogout = async () => {
@@ -24,10 +25,20 @@ const HeaderNav = ({ opened, toggle }: HeaderNavProps) => {
     navigate('/login');
   };
 
-  const scrollToPets = () => {
-    const petsSection = document.getElementById('pets-section');
-    if (petsSection) {
-      petsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  const handlePetsClick = () => {
+    if (location.pathname === '/home') {
+      const petsSection = document.getElementById('pets-section');
+      if (petsSection) {
+        petsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    } else {
+      navigate('/home');
+      setTimeout(() => {
+        const petsSection = document.getElementById('pets-section');
+        if (petsSection) {
+          petsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 100);
     }
   };
 
@@ -51,7 +62,7 @@ const HeaderNav = ({ opened, toggle }: HeaderNavProps) => {
       </div>
 
       <Group gap="md" visibleFrom="sm">
-        <Button variant="subtle" color="dark" size="sm" onClick={scrollToPets}>
+        <Button variant="subtle" color="dark" size="sm" onClick={handlePetsClick}>
           Pets
         </Button>
         <Button variant="subtle" color="dark" size="sm" onClick={() => navigate('/tutores/create')}>

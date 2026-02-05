@@ -50,7 +50,7 @@ export const useAuth = () => {
     Cookies.remove('expires_in');
     Cookies.remove('token_type');
    
-    navigate('/authentication/login');
+    navigate('/login');
   };
 
   return {

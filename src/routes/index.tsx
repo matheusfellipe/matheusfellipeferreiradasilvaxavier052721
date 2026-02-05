@@ -10,6 +10,7 @@ import { LoadingFallback } from './LoadingFallback';
 const PetPage = lazy(() => import('@/pages/Pet/Pet.page'));
 const PetDetailPage = lazy(() => import('@/pages/Pet/PetDetail.page'));
 const TutorPage = lazy(() => import('@/pages/Tutor/Tutor.page'));
+const TutorListPage = lazy(() => import('@/pages/Tutor/TutorList.page'));
 
 const PATH_HOME = '/home';
 const PATH_LOGIN = '/login';
@@ -63,7 +64,14 @@ export const routes = (
       </Route>
 
       <Route path={PATH_TUTOR.root}>
-        <Route index element={<Navigate to={PATH_HOME} replace />} />
+        <Route 
+          index 
+          element={
+            <Suspense fallback={<LoadingFallback />}>
+              <TutorListPage />
+            </Suspense>
+          } 
+        />
         <Route 
           path="create" 
           element={

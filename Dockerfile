@@ -10,6 +10,9 @@ RUN npm ci
 
 COPY . .
 
+# Run tests before building
+RUN npm run test:ci
+
 ENV VITE_API_BASE_URL=$VITE_API_BASE_URL
 
 RUN npm run build

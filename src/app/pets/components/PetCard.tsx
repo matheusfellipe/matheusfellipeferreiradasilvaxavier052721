@@ -13,19 +13,20 @@ export const PetCard = ({ pet, onClick }: PetCardProps) => {
       shadow="sm"
       padding="lg"
       radius="md"
-      className="cursor-pointer hover:shadow-lg transition-shadow"
+      className="cursor-pointer hover:shadow-lg transition-shadow h-full flex flex-col"
       onClick={() => onClick?.(pet)}
     >
-      <Card.Section>
+      <Card.Section className="h-48 overflow-hidden bg-gray-50">
         <Image
           src={pet.foto?.url}
-          height={200}
+          h="100%"
+          w="100%"
+          fit="contain"
           alt={pet.nome}
-          className="object-cover"
         />
       </Card.Section>
 
-      <div className="mt-4 space-y-3">
+      <div className="mt-4 space-y-3 flex-1 flex flex-col">
         <Group justify="space-between" align="flex-start">
           <div>
             <Text fw={600} size="lg">
@@ -46,7 +47,7 @@ export const PetCard = ({ pet, onClick }: PetCardProps) => {
           </Text>
         )}
 
-        <Group gap="xs">
+        <Group gap="xs" className="mt-auto pt-2">
           {pet.localizacao && (
             <Group gap={4}>
               <IconMapPin size={14} className="text-gray-500" />

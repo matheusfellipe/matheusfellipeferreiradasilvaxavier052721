@@ -3,11 +3,12 @@ import type { Pet } from './types';
 
 export interface PetListResponse {
   content: Pet[];
-  totalElements: number;
-  totalPages: number;
+  page: number;
   size: number;
-  number: number; // current page number
+  total: number;
+  pageCount: number;
 }
+
 
 export interface PetListParams {
   page?: number;

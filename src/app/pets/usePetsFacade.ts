@@ -25,12 +25,12 @@ export const usePetsFacade = () => {
     
    
     currentPage: page + 1, 
-    totalPages: data?.totalPages || 0,
-    totalPets: data?.totalElements || 0,
+    totalPages: data?.pageCount || 0,
+    totalPets: data?.total || 0,
     
     
     goToPage: (newPage: number) => setPage(newPage - 1), 
-    nextPage: () => setPage((prev) => Math.min(prev + 1, (data?.totalPages || 1) - 1)),
+    nextPage: () => setPage((prev) => Math.min(prev + 1, (data?.pageCount || 1) - 1)),
     previousPage: () => setPage((prev) => Math.max(prev - 1, 0)),
     
     

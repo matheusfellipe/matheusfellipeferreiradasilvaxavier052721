@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: Dockerfile
       args:
-        - VITE_API_BASE_URL=https://pet-manager-api.geia.vip/v1
+        - VITE_API_BASE_URL=https://pet-manager-api.geia.vip
     container_name: test-pet-frontend
     ports:
       - "3000:3000"
